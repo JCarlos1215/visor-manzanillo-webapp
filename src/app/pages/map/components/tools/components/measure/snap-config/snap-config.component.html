@@ -1,0 +1,39 @@
+<div cdkDrag cdkDragRootElement=".cdk-overlay-pane">
+  <div mat-dialog-title>
+    <div class="dragdrop-handle" cdkDragHandle>
+      <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
+        <path d="M0 0h24v24H0z" fill="none"></path>
+      </svg>
+    </div>
+    <h4 class="flex-blank-filler">Configuración snap</h4>
+  </div>
+  <div mat-dialog-content>
+    <table mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="layer">
+        <th mat-header-cell *matHeaderCellDef>Capas</th>
+        <td mat-cell *matCellDef="let layer" (click)="selection.toggle(layer)">
+          {{ layer.layer }}
+        </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let row">
+          <mat-checkbox (click)="$event.stopPropagation()" 
+            (change)="$event ? selection.toggle(row) : null" 
+            [checked]="selection.isSelected(row)">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  
+    </table>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button color="warn" mat-dialog-close>Cancelar</button>
+    <button mat-flat-button color="primary" [mat-dialog-close]="selection.selected">Aplicar</button>
+  </div>  
+</div>

@@ -1,0 +1,30 @@
+<div class="goto-location-container mat-elevation-z2" cdkDrag>
+  <div class="goto-location-title">
+    <div class="dragdrop-handle" cdkDragHandle>
+      <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
+        <path d="M0 0h24v24H0z" fill="none"></path>
+      </svg>
+    </div>
+    <span class="flex-blank-filler">Ir a coordenada</span>
+  </div>
+  <label for="tipoCoordenada">
+    <span>Tipo</span>
+    <select class="control" name="tipoCoordenada" id="tipoCoordenada" [formControl]="type" (change)="handleTypeCoord()">
+      <option value="5">EPSG:32613</option>
+      <option value="1">Longitud/Latitud</option>
+    </select>
+  </label>
+  <label for="coordinateX">
+    <span>{{ labelX }}</span>
+    <input class="control" id="coordinate" type="number" [formControl]="coordinateX" />
+  </label>
+  <label for="coordinateY">
+    <span>{{ labelY }}</span>
+    <input class="control" id="coordinate" type="number" [formControl]="coordinateY" />
+  </label>
+  <button mat-flat-button color="primary" (click)="gotoCoordinate()" title="Ir a Coordenadas">
+    <mat-icon>gps_fixed</mat-icon>
+    Ir a Ubicación
+  </button>
+</div>

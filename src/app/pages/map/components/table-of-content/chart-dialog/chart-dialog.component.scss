@@ -1,0 +1,50 @@
+mat-dialog-actions {
+  justify-content: flex-end;
+
+  button {
+    margin-left: 16px;
+  }
+}
+
+.title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  h3 {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    overflow: hidden;
+  }
+}
+
+.no-data {
+  color: red;
+}
+
+.totals {
+  font-size: 12pt;
+  font-weight: bold;
+}
+
+.mat-dialog-title {
+  position: relative;
+  padding: 0px;
+  margin: -24px 0px -16px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dragdrop-handle {
+  color: #000;
+  cursor: move;
+  width: 24px;
+  height: 24px;
+}
+
+.flex-blank-filler {
+  flex: 1 1 auto;
+  margin-left: 16px;
+}

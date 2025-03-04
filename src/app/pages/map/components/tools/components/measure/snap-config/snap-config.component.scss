@@ -1,0 +1,41 @@
+.mat-dialog-title {
+  position: relative;
+  top: -24px;
+  left: -24px;
+  right: 24px;
+  padding: 24px;
+  margin: unset;
+  background-color: #e4b346;
+  color: white;
+  width: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mat-dialog-actions {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding-bottom: 24px;
+}
+
+table {
+  width: 100%;
+}
+
+h4 {
+  margin: unset;
+}
+
+.dragdrop-handle {
+  color: #fff;
+  cursor: move;
+  width: 24px;
+  height: 24px;
+}
+
+.flex-blank-filler {
+  flex: 1 1 auto;
+  margin-left: 16px;
+}

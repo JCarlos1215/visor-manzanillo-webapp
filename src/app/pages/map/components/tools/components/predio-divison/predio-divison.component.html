@@ -1,0 +1,244 @@
+<div class="division-title">
+  <mat-icon>view_comfy</mat-icon>
+  <span class="flex-blank-filler">
+    Subdivisión
+  </span>
+  <button mat-icon-button (click)="callClose()">
+    <mat-icon> close </mat-icon>
+  </button>
+</div>
+
+<div class="division-container">
+  <div class="division-content">
+    <div class="shadow">
+      <section>
+        <div class="select-layer">
+          <select class="full-select" [(ngModel)]="layerSelected" (change)="handleSelectLayer()" name="selectLayer">
+            <option selected disabled value="">Selecciona capa para trámite de subdivisión</option>
+            <option ngValue="predio">
+              Predio
+            </option>
+            <option ngValue="construction">
+              Construcción
+            </option>
+          </select>
+
+          <div *ngIf="isLayerSelected">
+            <p>Selecciona {{ layerToFusion }} a subdividir</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="shadow">
+      <header>Linderos ({{ linderos.data.length }})</header>
+      <section>
+        <div class="data-table">
+          <table mat-table [dataSource]="linderos">
+            <ng-container matColumnDef="lado">
+              <th mat-header-cell *matHeaderCellDef>Lado</th>
+              <td mat-cell *matCellDef="let row">{{ row.lado }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="medida">
+              <th mat-header-cell *matHeaderCellDef>Medida lindero</th>
+              <td mat-cell *matCellDef="let row">{{ row.distancia | number: "1.2-2" }} m</td>
+            </ng-container>
+
+            <ng-container matColumnDef="distancia">
+              <th mat-header-cell *matHeaderCellDef>Distancia</th>
+              <td mat-cell *matCellDef="let row">
+                <input type="text" [(ngModel)]="row.distance">
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="elemento">
+              <th mat-header-cell *matHeaderCellDef>Elementos</th>
+              <td mat-cell *matCellDef="let row">
+                <input type="number" [(ngModel)]="row.element">
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="dirigido">
+              <th mat-header-cell *matHeaderCellDef>Vector dirigido</th>
+              <td mat-cell *matCellDef="let row">
+                <mat-checkbox [checked]="row.isDirected" [(ngModel)]="row.isDirected" matTooltip="La acción se realiza en el sentido hacia donde va el vector del lindero"></mat-checkbox>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="limpiar">
+              <th mat-header-cell *matHeaderCellDef>Limpiar lindero</th>
+              <td mat-cell *matCellDef="let row">
+                <mat-checkbox [checked]="row.needToClean" [(ngModel)]="row.needToClean" matTooltip="Se limpia el lindero antes de realizar la acción"></mat-checkbox>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef>Acciones</th>
+              <td mat-cell *matCellDef="let row" colspan="3" class="action-button">
+                <button
+                  mat-icon-button
+                  color="primary"
+                  matTooltip="Zoom al lindero seleccionado"
+                  (click)="moveToLindero(row)"
+                >
+                  <mat-icon>visibility</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  color="primary"
+                  matTooltip="Divide lindero seleccionado"
+                  (click)="divideLindero(row)"
+                >
+                  <mat-icon>linear_scale</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  color="primary"
+                  matTooltip="Genera línea paralela"
+                  (click)="getParalela(row)"
+                >
+                  <mat-icon>swap_horiz</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr
+              mat-header-row
+              *matHeaderRowDef="linderoColumns; sticky: true">
+            </tr>
+            <tr
+              mat-row
+              *matRowDef="let row; columns: linderoColumns"
+              class="row-pointer"
+            ></tr>
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell" colspan="7">
+                No se han obtenido linderos para subdividir
+              </td>
+            </tr>
+          </table>
+        </div>
+      </section>
+
+      <div *ngIf="paralelas.data.length > 0">
+        <header>Paralelas ({{ paralelas.data.length }})</header>
+        <section>
+          <div class="data-table">
+            <table mat-table [dataSource]="paralelas">
+              <ng-container matColumnDef="lado">
+                <th mat-header-cell *matHeaderCellDef>Lado</th>
+                <td mat-cell *matCellDef="let row">{{ row.lado }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="medida">
+                <th mat-header-cell *matHeaderCellDef>Medida lindero</th>
+                <td mat-cell *matCellDef="let row">{{ row.distancia | number: "1.2-2" }} m</td>
+              </ng-container>
+
+              <ng-container matColumnDef="distancia">
+                <th mat-header-cell *matHeaderCellDef>Distancia</th>
+                <td mat-cell *matCellDef="let row">
+                  <input type="text" [(ngModel)]="row.distance">
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="elemento">
+                <th mat-header-cell *matHeaderCellDef>Elementos</th>
+                <td mat-cell *matCellDef="let row">
+                  <input type="number" [(ngModel)]="row.element">
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="dirigido">
+                <th mat-header-cell *matHeaderCellDef>Vector dirigido</th>
+                <td mat-cell *matCellDef="let row">
+                  <mat-checkbox [checked]="row.isDirected" [(ngModel)]="row.isDirected" matTooltip="La acción se realiza en el sentido hacia donde va el vector del lindero"></mat-checkbox>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="limpiar">
+                <th mat-header-cell *matHeaderCellDef>Limpiar lindero</th>
+                <td mat-cell *matCellDef="let row">
+                  <mat-checkbox [checked]="row.needToClean" [(ngModel)]="row.needToClean" matTooltip="Se limpia el lindero antes de realizar la acción"></mat-checkbox>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>Acciones</th>
+                <td mat-cell *matCellDef="let row" colspan="2" class="action-button">
+                  <button
+                  mat-icon-button
+                  color="primary"
+                  matTooltip="Zoom a la paralela seleccionada"
+                  (click)="moveToParalela(row)"
+                >
+                  <mat-icon>visibility</mat-icon>
+                </button>
+                  <button
+                    mat-icon-button
+                    color="primary"
+                    matTooltip="Divide paralela seleccionada"
+                    (click)="divideParalela(row)"
+                  >
+                    <mat-icon>linear_scale</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+
+              <tr
+                mat-header-row
+                *matHeaderRowDef="linderoColumns; sticky: true">
+              </tr>
+              <tr
+                mat-row
+                *matRowDef="let row; columns: linderoColumns"
+                class="row-pointer"
+              ></tr>
+              <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="7">
+                  No se han obtenido paralelas para subdividir
+                </td>
+              </tr>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <div>
+        <span class="snap-select-section">Ajustarse a:</span>
+        <div class="snap-select-section">
+          <mat-slide-toggle (change)="activateSnapLayer($event, 'Predio')">Predio</mat-slide-toggle>
+          <mat-slide-toggle (change)="activateSnapLayer($event, 'Construccion')">Construcción</mat-slide-toggle>
+        </div>
+      </div>
+      
+      <div class="draw-section">
+        <mat-slide-toggle (change)="drawDivision($event)">Dibuja subdivisión</mat-slide-toggle>
+
+        <button mat-mini-fab color="primary" title="Borrar dibujo subdivisión" (click)="cleanDraw()" [disabled]="lineStringDivision === null">
+          <mat-icon>delete</mat-icon>
+        </button>
+
+        <button mat-mini-fab color="primary" title="Limpia y reinicia subdivisión" (click)="cleanDivision()" [disabled]="objectGeoSelected === undefined">
+          <mat-icon>autorenew</mat-icon>
+        </button>
+      </div>
+
+      <div *ngIf="showResult" class="result-container" [ngClass]="{'correct': resultCorrect}">
+        {{ resultMessage }}
+      </div>
+
+      <div class="action-section">
+        <button mat-flat-button color="primary" (click)="generateDivision()" [disabled]="objectGeoSelected === undefined || lineStringDivision === null">
+          Genera subdivisión
+        </button>
+        <button mat-flat-button color="primary" (click)="applyDivision()" [disabled]="objectGeoSelected === undefined || lineStringDivision === null">
+          Aplica subdivisión
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<sic-backdrop [backdropMessage]="backdropMessage" [showingLoading]="showLoading"></sic-backdrop>

@@ -1,0 +1,32 @@
+<div class="search-bar-component">
+  <mat-icon class="menu-icon clickable" (click)="openMenu()">menu</mat-icon>
+  <div class="separator"></div>
+  <mat-icon
+    class="search-icon clickable"
+    *ngIf="!activeSearch"
+    (click)="doSearch(searchform.value)"
+    >search</mat-icon
+  >
+  <mat-icon
+    class="search-icon clickable"
+    *ngIf="activeSearch"
+    (click)="clearSearch()"
+    >clear</mat-icon
+  >
+  <input
+    class="search-input mat-elevation-z2"
+    type="text"
+    name="search"
+    [placeholder]="placeholder"
+    matInput
+    #searchform
+    [formControl]="myControl"
+    (keyup)="doSearchWithEvent($event)"
+    [matAutocomplete]="auto"
+  />
+</div>
+<mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+  <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+    {{ option.search }}
+  </mat-option>
+</mat-autocomplete>

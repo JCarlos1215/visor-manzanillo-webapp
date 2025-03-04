@@ -1,0 +1,31 @@
+img {
+  height: 24px;
+  width: 24px;
+  margin-right: 10px;
+}
+
+mat-expansion-panel-header {
+  padding: 0px 12px;
+}
+
+mat-panel-title {
+  display: flex;
+  align-items: center;
+  
+}
+
+::ng-deep .mat-expansion-panel-body {
+  padding: 0 10px 12px !important;
+  background-color: #ffffff00;
+}
+
+.rollo {
+  margin-bottom: 9px;
+  background-color: rgba(255, 254, 254, 0);
+}
+
+.group-label {
+  flex: 1;
+  padding: 0 0 0 12px;
+  cursor: pointer;
+}

@@ -1,0 +1,145 @@
+
+// Estilos globales y tema personalizado de Angular Material
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+@import "variables";
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$visor-manzanillo-primary: mat.define-palette($visor-manzanillo-primary-color-palette);
+$visor-manzanillo-accent: mat.define-palette($visor-manzanillo-accent-color-palette);
+
+// The warn palette is optional (defaults to red).
+$visor-manzanillo-warn: mat.define-palette($visor-manzanillo-warn-color-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$visor-manzanillo-theme: mat.define-light-theme((
+  color: (
+    primary: $visor-manzanillo-primary,
+    accent: $visor-manzanillo-accent,
+    warn: $visor-manzanillo-warn,
+  )
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($visor-manzanillo-theme);
+
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+// Estilos globales para componentes
+* {
+  box-sizing: border-box;
+}
+
+.clickable {
+  cursor: pointer !important;
+}
+
+.nonselectable {
+  cursor: default;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.flex-blank-filler {
+  flex: 1 1 auto;
+}
+
+.fill-blank-space {
+  margin: auto;
+}
+
+// Estilos para elementos de la interfaz de openlayers
+.ol-control {
+  /* Set zoom tool in bottom right */
+  &.ol-zoom {
+    bottom: calc(0.5em + 40px) !important;
+    right: 76px !important;
+    left: auto !important;
+    top: auto !important;
+  }
+
+  &.ol-attribution {
+    right: 76px !important;
+  }
+
+  /* For colors of control buttons*/
+  button {
+    background-color: rgba($map-control-button, 0.75) !important;
+    &:hover {
+      background-color: rgba($map-control-button, 1) !important;
+    }
+  }
+}
+
+/* Set coodinates on the bottom left */
+.ol-mouse-position {
+  bottom: 0 !important;
+  left: 0.5em !important;
+  top: auto !important;
+  right: auto !important;
+}
+
+.ol-scale-bar {
+  bottom: 12px !important;
+  right: 144px;
+  left: unset!important;
+}
+
+.ol-tooltip {
+  position: relative;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+  color: white;
+  padding: 4px 8px;
+  opacity: 0.7;
+  white-space: nowrap;
+  font-size: 12px;
+
+  pointer-events: none;
+}
+
+.ol-tooltip-measure {
+  opacity: 1;
+  font-weight: bold;
+}
+
+.ol-tooltip-static {
+  background-color: $map-control-button;
+  color: white;
+  border: 1px solid white;
+}
+
+.ol-tooltip-measure:before,
+.ol-tooltip-static:before {
+  border-top: 6px solid rgba(0, 0, 0, 0.5);
+  border-right: 6px solid transparent;
+  border-left: 6px solid transparent;
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  margin-left: -7px;
+  left: 50%;
+}
+
+.ol-tooltip-static:before {
+  border-top-color: $map-control-button;
+}

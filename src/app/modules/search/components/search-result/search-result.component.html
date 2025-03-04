@@ -1,0 +1,27 @@
+<div class="result-header">RESULTADOS DE LA BÚSQUEDA</div>
+<div class="result-container mat-elevation-z2">
+  <div *ngIf="searching">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+  <div *ngFor="let row of result">
+    <h3 class="result-title" (click)="row.status = !row.status">{{ row.group }}</h3>
+    <p>Mostrando resultados de: {{ row.term }}</p>
+    <div *ngIf="row.total === 1; else moreResults">
+      <h4>{{ row.total }} resultado encontrado</h4>
+    </div>
+    <ng-template #moreResults>
+      <h4>{{ row.total }} resultados encontrados</h4>
+    </ng-template>
+    <div *ngIf="row.status">
+      <div *ngFor="let item of row.content" class="result-content">
+        <mat-card class="clickable item-card" (click)="onSelectResult(item)">
+          <div class="clickable displayed">{{ item.display }}</div>
+        </mat-card>
+      </div>
+      <br />
+    </div>
+  </div>
+  <div *ngIf="!searching && result.length === 0" class="no-result">
+    ** Sin Resultados **
+  </div>
+</div>

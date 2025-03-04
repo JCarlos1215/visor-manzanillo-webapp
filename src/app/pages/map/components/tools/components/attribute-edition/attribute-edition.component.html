@@ -1,0 +1,130 @@
+<div cdkDrag cdkDragRootElement=".cdk-overlay-pane">
+  <div class="attribute-edition-title">
+    <mat-icon>create</mat-icon>
+    <div class="dragdrop-handle" cdkDragHandle>
+      <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
+        <path d="M0 0h24v24H0z" fill="none"></path>
+      </svg>
+    </div>
+    <span class="flex-blank-filler">
+      Edición de atributos simple
+    </span>
+    <button mat-icon-button (click)="callClose()">
+      <mat-icon> close </mat-icon>
+    </button>
+  </div>
+  
+  <div class="attribute-edition-container">
+    <div class="attribute-edition-content">
+      <div class="shadow">
+        <section>
+          <div class="select-layer">
+            <select class="full-select" [(ngModel)]="layerSelected" (change)="handleSelectLayer()" name="selectLayer">
+              <option selected disabled value=undefined>Selecciona capa a editar</option>
+              <option *ngFor="let layer of editionLayers" [ngValue]="layer">
+                {{ layer.layerName }}
+              </option>
+            </select>
+  
+            <div *ngIf="isLayerSelected">
+              <p>Selecciona {{ layerEdition }} en el mapa para editar atributos</p>
+            </div>
+          </div>
+        </section>
+      </div>
+  
+      <div class="shadow">
+        <header>Atributos editables ({{ editionAttributes.data.length }})</header>
+        <section>
+          <div class="data-table">
+            <table mat-table [dataSource]="editionAttributes">
+              <ng-container matColumnDef="key">
+                <th mat-header-cell *matHeaderCellDef>Campo</th>
+                <td mat-cell *matCellDef="let row">{{ row.attributeShow }}</td>
+              </ng-container>
+  
+              <ng-container matColumnDef="value">
+                <th mat-header-cell *matHeaderCellDef>Valor</th>
+                <td mat-cell *matCellDef="let row">
+                  <div *ngIf="row.hasCatalogue; else normalInput">
+                    <!--<select  (change)="handleSelectLayer()">-->
+                    <select [(ngModel)]="row.value">
+                      <option selected disabled value=''>Selecciona valor</option>
+                      <option *ngFor="let cat of row.catalogue" [ngValue]="cat.id">
+                        {{ cat.descripcion }}
+                      </option>
+                    </select>
+                  </div>
+                  <ng-template #normalInput>
+                    <input type="text" [(ngModel)]="row.value">
+                  </ng-template>
+                </td>
+              </ng-container>
+  
+              <tr
+                mat-header-row
+                *matHeaderRowDef="attributeColumns; sticky: true">
+              </tr>
+              <tr
+                mat-row
+                *matRowDef="let row; columns: attributeColumns"
+                class="row-pointer"
+              ></tr>
+              <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="2">
+                  No se han obtenido atributos para editar
+                </td>
+              </tr>
+            </table>
+          </div>
+        </section>
+        <div *ngIf="showResult" class="result-container" [ngClass]="{'correct': resultCorrect}">
+          {{ resultMessage }}
+        </div>
+        <div class="action-section">
+          <button mat-flat-button color="primary" (click)="showingQuestion()" [disabled]="hasValidObject === false">
+            Actualizar datos
+          </button>
+          <button mat-flat-button color="primary" (click)="showDelete = true" [disabled]="hasValidObject === false || !layerSelected.canDelete">
+            Eliminar objeto
+          </button>
+        </div>
+        <div *ngIf="showQuestion">
+          <label for="question">
+            <span>¿Está seguro que desea actualizar?</span>
+          </label>
+          <label for="answer">
+            <div class="action-section">
+              <button mat-flat-button color="primary" (click)="validateData()">
+                Si
+              </button>
+              <button mat-flat-button color="primary" (click)="cancelUpdate()">
+                No
+              </button>
+            </div>
+          </label>
+        </div>
+        <div *ngIf="showDelete">
+          <label for="question">
+            <span>¿Está seguro que desea eliminar?</span>
+          </label>
+          <label for="answer">
+            <div class="action-section">
+              <button mat-flat-button color="primary" (click)="deleteData()">
+                Si
+              </button>
+              <button mat-flat-button color="primary" (click)="showDelete = false">
+                No
+              </button>
+            </div>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<sic-backdrop [backdropMessage]="backdropMessage" [showingLoading]="showLoading"></sic-backdrop>

@@ -1,0 +1,248 @@
+<div cdkDrag cdkDragRootElement=".cdk-overlay-pane">
+  <div class="dialog-title">
+    <mat-icon>pageview</mat-icon>
+    <div class="dragdrop-handle" cdkDragHandle>
+      <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
+        <path d="M0 0h24v24H0z" fill="none"></path>
+      </svg>
+    </div>
+    <span class="flex-blank-filler">
+      {{ title }}
+    </span>
+    <button mat-icon-button (click)="callClose()">
+      <mat-icon> close </mat-icon>
+    </button>
+  </div>
+  
+  <div class="identify-element-container">
+    <div *ngIf="res.PredioUrbano.length > 0">
+      <span class="feature-title">
+        Urbano
+      </span>
+      <div *ngFor="let item of res.PredioUrbano" class="element-item">
+        <div class="feature-content">
+          <span class="attribute-name">
+            Clave
+          </span>
+          <span class="attribute-value">
+            {{ item.formattedClave }}
+          </span>
+        </div>
+        <hr />
+        <div class="feature-content">
+          <span class="attribute-name">
+            Ubicación
+          </span>
+          <span class="attribute-value">
+            {{ item.ubicacion }}
+          </span>
+        </div>
+        <hr />
+        <div class="feature-content">
+          <span class="attribute-name">
+            Número exterior
+          </span>
+          <span class="attribute-value">
+            {{ item.numeroExterior }}
+          </span>
+        </div>
+        <hr />
+        <div class="feature-content">
+          <span class="attribute-name">
+            Número interior
+          </span>
+          <span class="attribute-value">
+            {{ item.numeroInterior }}
+          </span>
+        </div>
+        <hr />
+        <div class="feature-content">
+          <span class="attribute-name">
+            Propietario
+          </span>
+          <span class="attribute-value">
+            {{ item.propietario }}
+          </span>
+        </div>
+        <hr />
+        <button mat-flat-button color="primary" matTooltip="Ficha técnica" (click)="getFichaReport(item.formattedClave, 'urbano')">
+          <mat-icon>description</mat-icon>
+          Ficha técnica
+        </button>
+      </div>
+    </div>
+    <div *ngIf="res.PredioUP.length > 0">
+      <span class="feature-title">
+        UP
+      </span>
+      <div *ngFor="let item of res.PredioUP" class="element-item">
+        <div class="feature-content">
+          <span class="attribute-name">
+            Clave
+          </span>
+          <span class="attribute-value">
+            {{ item.formattedClave }}
+          </span>
+        </div>
+        <hr />
+        <div class="feature-content">
+          <span class="attribute-name">
+            Ubicación
+          </span>
+          <span class="attribute-value">
+            {{ item.ubicacion }}
+          </span>
+        </div>
+        <hr />
+        <div class="feature-content">
+          <span class="attribute-name">
+            Número exterior
+          </span>
+          <span class="attribute-value">
+            {{ item.numeroExterior }}
+          </span>
+        </div>
+        <hr />
+        <div class="feature-content">
+          <span class="attribute-name">
+            Número interior
+          </span>
+          <span class="attribute-value">
+            {{ item.numeroInterior }}
+          </span>
+        </div>
+        <hr />
+        <div class="feature-content">
+          <span class="attribute-name">
+            Propietario
+          </span>
+          <span class="attribute-value">
+            {{ item.propietario }}
+          </span>
+        </div>
+        <hr />
+        <button mat-flat-button color="primary" matTooltip="Ficha técnica" (click)="getFichaReport(item.formattedClave, 'up')">
+          <mat-icon>description</mat-icon>
+          Ficha técnica
+        </button>
+      </div>
+    </div>
+    <div *ngIf="res.PredioRustico.length > 0">
+      <span class="feature-title">
+        Rústico
+      </span>
+      <div *ngFor="let item of res.PredioRustico" class="element-item">
+        <div class="feature-content">
+          <span class="attribute-name">
+            Clave
+          </span>
+          <span class="attribute-value">
+            {{ item.formattedClave }}
+          </span>
+        </div>
+        <hr />
+        <div class="feature-content">
+          <span class="attribute-name">
+            Ubicación
+          </span>
+          <span class="attribute-value">
+            {{ item.ubicacion }}
+          </span>
+        </div>
+        <hr />
+        <div class="feature-content">
+          <span class="attribute-name">
+            Número exterior
+          </span>
+          <span class="attribute-value">
+            {{ item.numeroExterior }}
+          </span>
+        </div>
+        <hr />
+        <div class="feature-content">
+          <span class="attribute-name">
+            Número interior
+          </span>
+          <span class="attribute-value">
+            {{ item.numeroInterior }}
+          </span>
+        </div>
+        <hr />
+        <div class="feature-content">
+          <span class="attribute-name">
+            Propietario
+          </span>
+          <span class="attribute-value">
+            {{ item.propietario }}
+          </span>
+        </div>
+        <hr />
+        <button mat-flat-button color="primary" matTooltip="Ficha técnica" (click)="getFichaReport(item.formattedClave, 'rustico')">
+          <mat-icon>description</mat-icon>
+          Ficha técnica
+        </button>
+      </div>
+    </div>
+    <div *ngIf="res.PredioParcela.length > 0">
+      <span class="feature-title">
+        Parcela
+      </span>
+      <div *ngFor="let item of res.PredioParcela" class="element-item">
+        <div class="feature-content">
+          <span class="attribute-name">
+            Clave
+          </span>
+          <span class="attribute-value">
+            {{ item.formattedClave }}
+          </span>
+        </div>
+        <hr />
+        <div class="feature-content">
+          <span class="attribute-name">
+            Ubicación
+          </span>
+          <span class="attribute-value">
+            {{ item.ubicacion }}
+          </span>
+        </div>
+        <hr />
+        <div class="feature-content">
+          <span class="attribute-name">
+            Número exterior
+          </span>
+          <span class="attribute-value">
+            {{ item.numeroExterior }}
+          </span>
+        </div>
+        <hr />
+        <div class="feature-content">
+          <span class="attribute-name">
+            Número interior
+          </span>
+          <span class="attribute-value">
+            {{ item.numeroInterior }}
+          </span>
+        </div>
+        <hr />
+        <div class="feature-content">
+          <span class="attribute-name">
+            Propietario
+          </span>
+          <span class="attribute-value">
+            {{ item.propietario }}
+          </span>
+        </div>
+        <hr />
+        <button mat-flat-button color="primary" matTooltip="Ficha técnica" (click)="getFichaReport(item.formattedClave, 'parcela')">
+          <mat-icon>description</mat-icon>
+          Ficha técnica
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<sic-backdrop [backdropMessage]="backdropMessage" [showingLoading]="showLoading"></sic-backdrop>
+

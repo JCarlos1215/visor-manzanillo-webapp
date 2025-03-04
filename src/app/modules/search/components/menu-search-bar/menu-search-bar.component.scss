@@ -1,0 +1,52 @@
+:host {
+  position: absolute;
+  top: 80px;
+  left: 0;
+  width: 100%;
+  max-width: 420px !important;
+
+  z-index: 500;
+  pointer-events: auto;
+
+  * {
+    box-sizing: border-box;
+  }
+}
+
+.search-component {
+  position: relative;
+  width: 100%;
+  padding: 0 0;
+}
+
+.search-input {
+  height: 48px;
+  margin: 0;
+  border: 0;
+  border-radius: 2px;
+  padding-left: 68px;
+  padding-right: 32px;
+  width: 100%;
+  // background-color: $primary-background-color !important;
+  background-color: white !important;
+}
+.search-icon {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+}
+
+.menu-icon {
+  position: absolute;
+  top: 12px;
+  left: 16px;
+}
+
+.separator {
+  position: absolute;
+  left: 56px;
+  top: 6px;
+  width: 1px;
+  height: 36px;
+  background: #d7d7d7;
+}

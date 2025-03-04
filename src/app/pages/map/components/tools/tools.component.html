@@ -1,0 +1,76 @@
+<div class="tools-container">
+  <button *ngIf="toolMeasure" mat-icon-button class="tool-button mat-elevation-z2 clickable" title="Medición" (click)="toggleTool('measure')" [ngClass]="{ active: activeTool === 'measure' }">
+    <mat-icon class="tool-icon">straighten</mat-icon>
+  </button>
+  <button *ngIf="toolGoto" mat-icon-button class="tool-button mat-elevation-z2 clickable" title="Ir a" (click)="toggleTool('goto')" [ngClass]="{ active: activeTool === 'goto' }">
+    <mat-icon class="tool-icon">gps_fixed</mat-icon>
+  </button>
+  <!--<button *ngIf="toolIdentify" mat-icon-button class="tool-button mat-elevation-z2 clickable" title="Identifica" (click)="toggleTool('identify')" [ngClass]="{ active: activeTool === 'identify' }">-->
+  <button mat-icon-button class="tool-button mat-elevation-z2 clickable" title="Identifica" (click)="toggleTool('identify')" [ngClass]="{ active: activeTool === 'identify' }">
+    <mat-icon class="tool-icon">info</mat-icon>
+  </button>
+  <!--<button *ngIf="toolGoogleSatellite" mat-icon-button class="tool-button mat-elevation-z2 clickable" title="Google Satellite" (click)="toggleSatelliteLayer()" [ngClass]="{ active: activeLayer }">
+    <mat-icon class="tool-icon">panorama</mat-icon>
+  </button>-->
+  <button *ngIf="toolFront" mat-icon-button class="tool-button mat-elevation-z2 clickable" title="Ver frentes" (click)="toggleTool('front')" [ngClass]="{ active: activeTool === 'front' }">
+    <mat-icon class="tool-icon">home</mat-icon>
+  </button>
+  <button *ngIf="toolIndividualAvaluo" mat-icon-button class="tool-button mat-elevation-z2 clickable" title="Avalúo individual" (click)="toggleTool('simple-avaluo')" [ngClass]="{ active: activeTool === 'simple-avaluo' }">
+    <mat-icon class="tool-icon">description</mat-icon>
+  </button>
+  <button *ngIf="toolReferredAvaluo" mat-icon-button class="tool-button mat-elevation-z2 clickable" title="Avalúo referido" (click)="toggleTool('referred-avaluo')" [ngClass]="{ active: activeTool === 'referred-avaluo' }">
+    <mat-icon class="tool-icon">summarize</mat-icon>
+  </button>
+  <button *ngIf="toolMultipleAvaluo" mat-icon-button class="tool-button mat-elevation-z2 clickable" title="Avalúo multiple" (click)="toggleTool('multiple-avaluo')" [ngClass]="{ active: activeTool === 'multiple-avaluo' }">
+    <mat-icon class="tool-icon">library_books</mat-icon>
+  </button>
+  <!--<button mat-icon-button class="tool-button mat-elevation-z2 clickable" title="Bitácora de trabajo en campo" (click)="showRoutes()" [ngClass]="{ active: activeTool === 'routes' }">
+    <mat-icon class="tool-icon">commute</mat-icon>
+  </button>-->
+  <button *ngIf="toolPayment" mat-icon-button class="tool-button mat-elevation-z2 clickable" title="Gestión de pagos" (click)="toggleTool('payment')" [ngClass]="{ active: activeTool === 'payment' }">
+    <mat-icon class="tool-icon">attach_money</mat-icon>
+  </button>
+  <button *ngIf="toolPrint" mat-icon-button class="tool-button mat-elevation-z2 clickable" title="Impresión de planos" (click)="toggleTool('print')" [ngClass]="{ active: activeTool === 'print' }">
+    <mat-icon class="tool-icon">print</mat-icon>
+  </button>
+  <button *ngIf="toolPadronData" mat-icon-button class="tool-button mat-elevation-z2 clickable" title="Datos padrón" (click)="toggleTool('padron')" [ngClass]="{ active: activeTool === 'padron' }">
+    <mat-icon class="tool-icon">import_contacts</mat-icon>
+  </button>
+  <button *ngIf="toolFusion" mat-icon-button class="tool-button mat-elevation-z2 clickable" title="Fusión" (click)="showFusion()" [ngClass]="{ active: activeTool === 'fusion' }">
+    <mat-icon class="tool-icon">view_compact</mat-icon>
+  </button>
+  <button *ngIf="toolDivision" mat-icon-button class="tool-button mat-elevation-z2 clickable" title="Subdivisión" (click)="showDivision()" [ngClass]="{ active: activeTool === 'division' }">
+    <mat-icon class="tool-icon">view_comfy</mat-icon>
+  </button>
+  <button *ngIf="toolEditionAttribute" mat-icon-button class="tool-button mat-elevation-z2 clickable" title="Edición de atributos" (click)="showAttributeEdition()" [ngClass]="{ active: activeTool === 'edition' }">
+    <mat-icon class="tool-icon">create</mat-icon>
+  </button>
+  <button *ngIf="toolDeslinde" mat-icon-button class="tool-button mat-elevation-z2 clickable" title="Deslinde catastral / Medidas según escritura" (click)="toggleTool('deslinde')" [ngClass]="{ active: activeTool === 'deslinde' }">
+    <mat-icon class="tool-icon">chrome_reader_mode</mat-icon>
+  </button>
+  <button *ngIf="toolConstructionAdjust" mat-icon-button class="tool-button mat-elevation-z2 clickable" title="Ajuste a construcciones" (click)="showConstructionAdjust()" [ngClass]="{ active: activeTool === 'adjust' }">
+    <mat-icon class="tool-icon">settings_overscan</mat-icon>
+  </button>
+  <button *ngIf="toolUploadGeom" mat-icon-button class="tool-button mat-elevation-z2 clickable" title="Carga geometría KML" (click)="toggleTool('upload')" [ngClass]="{ active: activeTool === 'upload' }">
+    <mat-icon class="tool-icon">publish</mat-icon>
+  </button>
+  <button mat-icon-button class="tool-button mat-elevation-z2 clickable" title="Usuario" (click)="toggleTool('user')" [ngClass]="{ active: activeTool === 'user' }">
+    <mat-icon class="tool-icon">account_circle</mat-icon>
+  </button>
+  <!--<button mat-icon-button class="tool-button mat-elevation-z2 clickable" title="Cerrar sesión" (click)="logout()">
+    <mat-icon class="tool-icon">login</mat-icon>
+  </button>-->
+</div>
+
+<sic-measure *ngIf="activeTool === 'measure'" class="mat-elevation-z2"></sic-measure>
+<sic-goto-location *ngIf="activeTool === 'goto'" class="mat-elevation-z2"></sic-goto-location>
+<sic-watch-front *ngIf="activeTool === 'front'" class="mat-elevation-z2"></sic-watch-front>
+<sic-simple-avaluo *ngIf="activeTool === 'simple-avaluo'" class="mat-elevation-z2" [isReferred]="false"></sic-simple-avaluo>
+<sic-simple-avaluo *ngIf="activeTool === 'referred-avaluo'" class="mat-elevation-z2" [isReferred]="true"></sic-simple-avaluo>
+<sic-multiple-avaluo *ngIf="activeTool === 'multiple-avaluo'" class="mat-elevation-z2"></sic-multiple-avaluo>
+<sic-payment *ngIf="activeTool === 'payment'" class="mat-elevation-z2"></sic-payment>
+<sic-print *ngIf="activeTool === 'print'" class="mat-elevation-z2"></sic-print>
+<sic-user *ngIf="activeTool === 'user'" class="mat-elevation-z2" [watchUser]="watchUser" (resultWatch)="toggleUserInfo($event)"></sic-user>
+<sic-padron-data *ngIf="activeTool === 'padron'" class="mat-elevation-z2"></sic-padron-data>
+<sic-deslinde-catastral *ngIf="activeTool === 'deslinde'" class="mat-elevation-z2"></sic-deslinde-catastral>
+<sic-upload-geom *ngIf="activeTool === 'upload'" class="mat-elevation-z2"></sic-upload-geom>

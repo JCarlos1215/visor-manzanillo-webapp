@@ -1,0 +1,27 @@
+<div class="avaluo-simple-container mat-elevation-z2" cdkDrag>
+  <div class="avaluo-simple-title">
+    <div class="dragdrop-handle" cdkDragHandle>
+      <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
+        <path d="M0 0h24v24H0z" fill="none"></path>
+      </svg>
+    </div>
+    <span class="flex-blank-filler">{{ titleTool }}</span>
+  </div>
+  <div class="avaluo-simple-content">
+    <div *ngIf="isReferred; else simpleAvaluo">
+      <select class="select-year" (change)="handleSelectYearReferred($event)">
+        <option selected disabled value="0">Año referido</option>
+        <option *ngFor="let year of referredYears" [value]="year">
+          {{ year }}
+        </option>
+      </select>
+      <p *ngIf="yearSelected !== 0">Selecciona un predio para su avalúo referido</p>
+    </div>
+    <ng-template #simpleAvaluo>
+      <p>Selecciona un predio para su avalúo</p>
+    </ng-template>
+  </div>
+</div>
+
+<sic-backdrop [backdropMessage]="backdropMessage" [showingLoading]="showLoading"></sic-backdrop>

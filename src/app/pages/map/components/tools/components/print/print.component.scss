@@ -1,0 +1,172 @@
+@import "./../../../../../../../variables";
+
+.print-container {
+  position: absolute;
+  top: 80px;
+  right: 64px;
+  width: 100%;
+  max-width: 338px !important;
+
+  max-height: calc(100% - 80px) !important;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  padding: 8px;
+  background-color: white !important;
+
+  border: 0;
+
+  z-index: 500;
+
+  label {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 5px;
+
+    span {
+      display: inline-block;
+      width: 90%;
+    }
+
+    .control {
+      flex: 1 1 auto;
+    }
+
+    input {
+      border: none;
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 1.5;
+      padding: 6px 12px;
+      color: #495057;
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+      width: 100%;
+      transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  
+      &:focus {
+        outline: none;
+        background-color: #fff;
+        border-color: $map-control-button;
+        box-shadow: 0 0 0 0.2rem rgba($color: $map-control-button, $alpha: 0.25);
+      }
+    }
+  }
+
+  select {
+    border: none;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.5;
+    padding: 6px 12px;
+    color: #495057;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    width: 100%;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+    &:focus {
+      outline: none;
+      background-color: #fff;
+      border-color: $map-control-button;
+      box-shadow: 0 0 0 0.2rem rgba($color: $map-control-button, $alpha: 0.25);
+    }
+  }
+
+  .print-list {
+    margin: unset;
+    margin-top: 44px;
+  }
+
+  button {
+    width: 100%;
+    margin: 6px 0px 6px 0px;
+    margin-left: auto;
+    color: white;
+  }
+}
+
+.simple-container {
+  margin-top: 48px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  max-height: 444px;
+}
+
+.volver-button {
+  position: sticky;
+}
+
+.print-title {
+  position: fixed;
+  width: 338px;
+  background: rgba($color: $tool-header-background, $alpha: 1);
+  height: 48px;
+  color: white;
+  font-size: 16pt;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: -8px -8px 0 -8px;
+}
+
+@media screen and (max-width: 850px) {
+  .print-container {
+    top: calc(1em + 104px + 1.5em);
+    left: 3em;
+    max-width: 160px !important;
+    max-height: 160px !important;
+  }
+}
+
+.datepicker {
+  ::ng-deep.mat-form-field-label {
+    margin-top: 15px !important;
+  }
+}
+
+mat-form-field {
+  width: 100%;
+
+  input {
+    width: 80%;
+  }
+}
+
+.size-page {
+  margin-bottom: 5px;
+}
+
+.dragdrop-handle {
+  color: #fff;
+  cursor: move;
+  width: 24px;
+  height: 24px;
+}
+
+.flex-blank-filler {
+  flex: 1 1 auto;
+  margin-left: 56px;
+}
+
+textarea {
+  border: none;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.5;
+  padding: 6px 12px;
+  color: #495057;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  width: 100%;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+  &:focus {
+    outline: none;
+    background-color: #fff;
+    border-color: $primary-color;
+    box-shadow: 0 0 0 0.2rem rgba(157, 68, 68, 0.25);
+  }
+}

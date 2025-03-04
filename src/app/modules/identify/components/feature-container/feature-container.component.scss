@@ -1,0 +1,49 @@
+@import "./../../../../../variables";
+
+:host {
+  color: #19222b;
+}
+
+.feature-content {
+  overflow-wrap: break-word;
+}
+
+.attribute-header {
+  display: block;
+  text-align: center;
+  font-weight: bold;
+  background-color: rgba($color: $identify-title-background-color, $alpha: 0.2);
+  padding: 5px;
+}
+
+.attribute-name {
+  display: inline-block;
+  width: 110px;
+  text-align: left;
+  font-weight: bold;
+  overflow-wrap: break-word;
+  vertical-align: top;
+  padding-left: 10px;
+}
+
+.attribute-value {
+  display: inline-block;
+  width: 160px;
+  text-align: left;
+  font-weight: normal;
+  margin-left: 10px;
+}
+
+.file {
+  color: #5a84c1;
+}
+
+@media screen and (min-width: 600px) {
+  .attribute-name {
+    width: 130px;
+  }
+
+  .attribute-value {
+    width: 180px;
+  }
+}

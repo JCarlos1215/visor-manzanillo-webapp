@@ -1,0 +1,539 @@
+<div cdkDrag cdkDragRootElement=".cdk-overlay-pane">
+  <div class="dialog-title">
+    <mat-icon class="icon-left">import_contacts</mat-icon>
+    <div class="dragdrop-handle" cdkDragHandle>
+      <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
+        <path d="M0 0h24v24H0z" fill="none"></path>
+      </svg>
+    </div>
+    <span class="flex-blank-filler">
+      {{ title }}
+    </span>
+    <button mat-icon-button (click)="callClose()">
+      <mat-icon> close </mat-icon>
+    </button>
+  </div>
+  
+  <div class="padron-detail-container">
+    <div class="detail-content">
+      <div *ngIf="canWatchPredioCategorization; else onlyPredioData">
+        <div class="shadow">
+          <header>
+            Resultados
+          </header>
+          <section>
+            <table>
+              <tbody>
+                <tr>
+                  <td class="attribute">Total predios</td>
+                  <td class="attribute">Predio en padrón sin cartografía</td>
+                  <td class="attribute">Área cartografía vs padrón catastral dentro del 10%</td>
+                  <td class="attribute">Área cartografía vs padrón catastral fuera del 10%</td>
+                  <td class="attribute">Predio en cartografía sin vínculo con padrón</td>
+                  <td class="attribute">Régimen de condominio</td>
+                  <td class="attribute">Pendiente de regularización</td>
+                  <td class="attribute">Predio en proceso de vinculación de utilidad pública</td>
+                  <td class="attribute">Predio en zona federal</td>
+                </tr>
+                <tr>
+                  <td class="value">{{ totalPredios }}</td>
+                  <td class="value cianer">{{ totalPredioSinCartografia }}</td>
+                  <td class="value greener">{{ totalAreaDentroDel10 }}</td>
+                  <td class="value yellower">{{ totalAreaFueraDel10 }}</td>
+                  <td class="value reder">{{ totalPredioCartografiaSinVinculoPadron }}</td>
+                  <td class="value bluer">{{ totalRegimenCondominio }}</td>
+                  <td class="value oranger">{{ totalPendienteRegularizacion }}</td>
+                  <td class="value magentaer">{{ totalPredioProcesoVinculacion }}</td>
+                  <td class="value grayer">{{ totalZonaFederal }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+        </div>
+    
+        <div class="shadow">
+          <header>Predios</header>
+          <section>
+            <div class="data-table">
+              <table mat-table [dataSource]="predios">
+                <ng-container matColumnDef="clave">
+                  <th mat-header-cell *matHeaderCellDef>Clave</th>
+                  <td mat-cell *matCellDef="let row">{{ row.clave }}</td>
+                </ng-container>
+    
+                <ng-container matColumnDef="subpredio">
+                  <th mat-header-cell *matHeaderCellDef>Subpredio</th>
+                  <td mat-cell *matCellDef="let row">{{ row.subpredio }}</td>
+                </ng-container>
+    
+                <ng-container matColumnDef="tipoPredio">
+                  <th mat-header-cell *matHeaderCellDef>Tipo</th>
+                  <td mat-cell *matCellDef="let row">{{ row.tipoPredio }}</td>
+                </ng-container>
+    
+                <ng-container matColumnDef="cuenta">
+                  <th mat-header-cell *matHeaderCellDef>Cuenta</th>
+                  <td mat-cell *matCellDef="let row">{{ row.cuenta }}</td>
+                </ng-container>
+    
+                <ng-container matColumnDef="areaCartografica">
+                  <th mat-header-cell *matHeaderCellDef>Área cartográfica</th>
+                  <td mat-cell *matCellDef="let row">{{ row.areaCartografica | number: "1.2-2" }}m<sup>2</sup></td>
+                </ng-container>
+    
+                <ng-container matColumnDef="areaPadron">
+                  <th mat-header-cell *matHeaderCellDef>Área padrón</th>
+                  <td mat-cell *matCellDef="let row">{{ row.areaPadron | number: "1.2-2" }}m<sup>2</sup></td>
+                </ng-container>
+    
+                <ng-container matColumnDef="porcentaje">
+                  <th mat-header-cell *matHeaderCellDef>%</th>
+                  <td mat-cell *matCellDef="let row">{{ row.porcentaje }}</td>
+                </ng-container>
+    
+                <ng-container matColumnDef="propietario">
+                  <th mat-header-cell *matHeaderCellDef>Propietario</th>
+                  <td mat-cell *matCellDef="let row">{{ row.propietario }}</td>
+                </ng-container>
+    
+                <ng-container matColumnDef="ubicacion">
+                  <th mat-header-cell *matHeaderCellDef>Ubicación</th>
+                  <td mat-cell *matCellDef="let row">{{ row.ubicacion }}</td>
+                </ng-container>
+    
+                <ng-container matColumnDef="numExterior">
+                  <th mat-header-cell *matHeaderCellDef>Número exterior</th>
+                  <td mat-cell *matCellDef="let row">{{ row.numExterior }}</td>
+                </ng-container>
+    
+                <ng-container matColumnDef="numInterior">
+                  <th mat-header-cell *matHeaderCellDef>Número interior</th>
+                  <td mat-cell *matCellDef="let row">{{ row.numInterior }}</td>
+                </ng-container>
+    
+                <ng-container matColumnDef="colonia">
+                  <th mat-header-cell *matHeaderCellDef>Colonia</th>
+                  <td mat-cell *matCellDef="let row">{{ row.colonia }}</td>
+                </ng-container>
+    
+                <tr
+                  mat-header-row
+                  *matHeaderRowDef="predioColumns; sticky: true">
+                </tr>
+                <tr
+                  mat-row
+                  *matRowDef="let row; columns: predioColumns"
+                  class="row-pointer"
+                  (click)="selectedPredio(row)"
+                  (mouseover)="watchPredio(row.feature)"
+                  [ngClass]="getStyleClass(row.clase, row.isSelected)"
+                  [matTooltip]="getTypeClass(row.clase)"
+                ></tr>
+                <tr class="mat-row" *matNoDataRow>
+                  <td class="mat-cell" colspan="12">
+                    No se encontraron datos predios.
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <ng-template #onlyPredioData>
+        <div class="shadow">
+          <header>Predios</header>
+          <section>
+            <div class="data-table">
+              <table mat-table [dataSource]="predios">
+                <ng-container matColumnDef="clave">
+                  <th mat-header-cell *matHeaderCellDef>Clave</th>
+                  <td mat-cell *matCellDef="let row">{{ row.clave }}</td>
+                </ng-container>
+    
+                <ng-container matColumnDef="subpredio">
+                  <th mat-header-cell *matHeaderCellDef>Subpredio</th>
+                  <td mat-cell *matCellDef="let row">{{ row.subpredio }}</td>
+                </ng-container>
+    
+                <ng-container matColumnDef="tipoPredio">
+                  <th mat-header-cell *matHeaderCellDef>Tipo</th>
+                  <td mat-cell *matCellDef="let row">{{ row.tipoPredio }}</td>
+                </ng-container>
+    
+                <ng-container matColumnDef="cuenta">
+                  <th mat-header-cell *matHeaderCellDef>Cuenta</th>
+                  <td mat-cell *matCellDef="let row">{{ row.cuenta }}</td>
+                </ng-container>
+    
+                <ng-container matColumnDef="areaCartografica">
+                  <th mat-header-cell *matHeaderCellDef>Área cartográfica</th>
+                  <td mat-cell *matCellDef="let row">{{ row.areaCartografica | number: "1.2-2" }}m<sup>2</sup></td>
+                </ng-container>
+    
+                <ng-container matColumnDef="areaPadron">
+                  <th mat-header-cell *matHeaderCellDef>Área padrón</th>
+                  <td mat-cell *matCellDef="let row">{{ row.areaPadron | number: "1.2-2" }}m<sup>2</sup></td>
+                </ng-container>
+    
+                <ng-container matColumnDef="porcentaje">
+                  <th mat-header-cell *matHeaderCellDef>%</th>
+                  <td mat-cell *matCellDef="let row">{{ row.porcentaje }}</td>
+                </ng-container>
+    
+                <ng-container matColumnDef="propietario">
+                  <th mat-header-cell *matHeaderCellDef>Propietario</th>
+                  <td mat-cell *matCellDef="let row">{{ row.propietario }}</td>
+                </ng-container>
+    
+                <ng-container matColumnDef="ubicacion">
+                  <th mat-header-cell *matHeaderCellDef>Ubicación</th>
+                  <td mat-cell *matCellDef="let row">{{ row.ubicacion }}</td>
+                </ng-container>
+    
+                <ng-container matColumnDef="numExterior">
+                  <th mat-header-cell *matHeaderCellDef>Número exterior</th>
+                  <td mat-cell *matCellDef="let row">{{ row.numExterior }}</td>
+                </ng-container>
+    
+                <ng-container matColumnDef="numInterior">
+                  <th mat-header-cell *matHeaderCellDef>Número interior</th>
+                  <td mat-cell *matCellDef="let row">{{ row.numInterior }}</td>
+                </ng-container>
+    
+                <ng-container matColumnDef="colonia">
+                  <th mat-header-cell *matHeaderCellDef>Colonia</th>
+                  <td mat-cell *matCellDef="let row">{{ row.colonia }}</td>
+                </ng-container>
+    
+                <tr
+                  mat-header-row
+                  *matHeaderRowDef="predioColumns; sticky: true">
+                </tr>
+                <tr
+                  mat-row
+                  *matRowDef="let row; columns: predioColumns"
+                  class="row-pointer"
+                  (click)="selectedPredio(row)"
+                  (mouseover)="watchPredio(row.feature)"
+                  [ngClass]="{ activeRow: row.isSelected }"
+                ></tr>
+                <tr class="mat-row" *matNoDataRow>
+                  <td class="mat-cell" colspan="12">
+                    No se encontraron datos predios.
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </section>
+        </div>
+      </ng-template>
+      
+      
+      <div class="shadow">
+        <header>Predio {{ predioSelected.clave }} </header>
+        <section>
+          <mat-tab-group>
+            <mat-tab [label]="'Avaluo (' + avaluo.data.length + ')'">
+              <div class="shadow">
+                <section>
+                  <div class="data-table">
+                    <table mat-table [dataSource]="avaluo">
+                      <ng-container matColumnDef="fecha">
+                        <th mat-header-cell *matHeaderCellDef>Fecha</th>
+                        <td mat-cell *matCellDef="let row">{{ getFormatDate(row.fecha) }}</td>
+                      </ng-container>
+          
+                      <ng-container matColumnDef="superficieTerreno">
+                        <th mat-header-cell *matHeaderCellDef>Superficie terreno</th>
+                        <td mat-cell *matCellDef="let row">{{ row.superficieTerreno | number: "1.2-2" }}m<sup>2</sup></td>
+                      </ng-container>
+          
+                      <ng-container matColumnDef="superficieConstruccion">
+                        <th mat-header-cell *matHeaderCellDef>Superficie construcción</th>
+                        <td mat-cell *matCellDef="let row">{{ row.superficieConstruccion | number: "1.2-2" }}m<sup>2</sup></td>
+                      </ng-container>
+          
+                      <ng-container matColumnDef="valorTerreno">
+                        <th mat-header-cell *matHeaderCellDef>Valor terreno</th>
+                        <td mat-cell *matCellDef="let row">${{ row.valorTerreno | number: "1.2-2" }}</td>
+                      </ng-container>
+          
+                      <ng-container matColumnDef="valorConstruccion">
+                        <th mat-header-cell *matHeaderCellDef>Valor construcción</th>
+                        <td mat-cell *matCellDef="let row">${{ row.valorConstruccion | number: "1.2-2" }}</td>
+                      </ng-container>
+          
+                      <ng-container matColumnDef="valorFiscal">
+                        <th mat-header-cell *matHeaderCellDef>Valor fiscal</th>
+                        <td mat-cell *matCellDef="let row">${{ row.valorFiscal | number: "1.2-2" }}</td>
+                      </ng-container>
+          
+                      <ng-container matColumnDef="indiviso">
+                        <th mat-header-cell *matHeaderCellDef>Indiviso</th>
+                        <td mat-cell *matCellDef="let row">{{ row.indiviso }}</td>
+                      </ng-container>
+          
+                      <ng-container matColumnDef="frente">
+                        <th mat-header-cell *matHeaderCellDef>Frente</th>
+                        <td mat-cell *matCellDef="let row">{{ row.frente }}</td>
+                      </ng-container>
+          
+                      <ng-container matColumnDef="profundidad">
+                        <th mat-header-cell *matHeaderCellDef>Profundidad</th>
+                        <td mat-cell *matCellDef="let row">{{ row.profundidad }}</td>
+                      </ng-container>
+          
+                      <ng-container matColumnDef="perimetro">
+                        <th mat-header-cell *matHeaderCellDef>Perimetro</th>
+                        <td mat-cell *matCellDef="let row">{{ row.perimetro }}m</td>
+                      </ng-container>
+          
+                      <tr
+                        mat-header-row
+                        *matHeaderRowDef="avaluoColumns; sticky: true">
+                      </tr>
+                      <tr
+                        mat-row
+                        *matRowDef="let row; columns: avaluoColumns"
+                      ></tr>
+                      <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="10">
+                          No se encontraron datos de avalúo.
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </section>
+              </div>
+            </mat-tab>
+      
+            <mat-tab [label]="'Adeudo (' + debt.data.length + ')'">
+              <div class="shadow">
+                <section>
+                  <div class="data-table">
+                    <table mat-table [dataSource]="debt">
+                      <ng-container matColumnDef="cuenta">
+                        <th mat-header-cell *matHeaderCellDef>Cuenta</th>
+                        <td mat-cell *matCellDef="let row">{{ row.idCuenta }}</td>
+                        <td mat-footer-cell *matFooterCellDef></td>
+                      </ng-container>
+  
+                      <ng-container matColumnDef="recaudadora">
+                        <th mat-header-cell *matHeaderCellDef>Recaudadora</th>
+                        <td mat-cell *matCellDef="let row">{{ row.recaudadora }}</td>
+                        <td mat-footer-cell *matFooterCellDef></td>
+                      </ng-container>
+  
+                      <ng-container matColumnDef="clave">
+                        <th mat-header-cell *matHeaderCellDef>Clave</th>
+                        <td mat-cell *matCellDef="let row">{{ row.clave }}</td>
+                        <td mat-footer-cell *matFooterCellDef></td>
+                      </ng-container>
+  
+                      <ng-container matColumnDef="subpredio">
+                        <th mat-header-cell *matHeaderCellDef>Subpredio</th>
+                        <td mat-cell *matCellDef="let row">{{ row.subpredio }}</td>
+                        <td mat-footer-cell *matFooterCellDef></td>
+                      </ng-container>
+  
+                      <ng-container matColumnDef="tasa">
+                        <th mat-header-cell *matHeaderCellDef>Tasa</th>
+                        <td mat-cell *matCellDef="let row">{{ row.idTasa }}</td>
+                        <td mat-footer-cell *matFooterCellDef></td>
+                      </ng-container>
+  
+                      <ng-container matColumnDef="importeAdeudado">
+                        <th mat-header-cell *matHeaderCellDef>Importe adeudado</th>
+                        <td mat-cell *matCellDef="let row">${{ row.importeAdeudado | number: "1.2-2" }}</td>
+                        <td mat-footer-cell *matFooterCellDef></td>
+                      </ng-container>
+          
+                      <ng-container matColumnDef="recargoAdeudado">
+                        <th mat-header-cell *matHeaderCellDef>Recargo adeudado</th>
+                        <td mat-cell *matCellDef="let row">${{ row.recargoAdeudado | number: "1.2-2" }}</td>
+                        <td mat-footer-cell *matFooterCellDef></td>
+                      </ng-container>
+          
+                      <ng-container matColumnDef="multas">
+                        <th mat-header-cell *matHeaderCellDef>Multas</th>
+                        <td mat-cell *matCellDef="let row">${{ row.multas | number: "1.2-2" }}</td>
+                        <td mat-footer-cell *matFooterCellDef>Total</td>
+                      </ng-container>
+          
+                      <ng-container matColumnDef="saldo">
+                        <th mat-header-cell *matHeaderCellDef>Saldo</th>
+                        <td mat-cell *matCellDef="let row">${{ row.saldo | number: "1.2-2" }}</td>
+                        <td mat-footer-cell *matFooterCellDef>${{ getTotalSaldo() }}</td>
+                      </ng-container>
+          
+                      <tr
+                        mat-header-row
+                        *matHeaderRowDef="debtColumns; sticky: true">
+                      </tr>
+                      <tr
+                        mat-row
+                        *matRowDef="let row; columns: debtColumns"
+                      ></tr>
+                      <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="9">
+                          No se encontraron datos de adeudo.
+                        </td>
+                      </tr>
+                      <tr mat-footer-row *matFooterRowDef="debtColumns"></tr>
+                    </table>
+                  </div>
+                </section>
+              </div>
+            </mat-tab>
+      
+            <mat-tab [label]="'Pagos (' + paid.data.length + ')'">
+              <div class="shadow">
+                <section>
+                  <div class="data-table">
+                    <table mat-table [dataSource]="paid">
+                      <ng-container matColumnDef="cuenta">
+                        <th mat-header-cell *matHeaderCellDef>Cuenta</th>
+                        <td mat-cell *matCellDef="let row">{{ row.idCuenta }}</td>
+                        <td mat-footer-cell *matFooterCellDef></td>
+                      </ng-container>
+  
+                      <ng-container matColumnDef="recaudadora">
+                        <th mat-header-cell *matHeaderCellDef>Recaudadora</th>
+                        <td mat-cell *matCellDef="let row">{{ row.recaudadora }}</td>
+                        <td mat-footer-cell *matFooterCellDef></td>
+                      </ng-container>
+  
+                      <ng-container matColumnDef="clave">
+                        <th mat-header-cell *matHeaderCellDef>Clave</th>
+                        <td mat-cell *matCellDef="let row">{{ row.clave }}</td>
+                        <td mat-footer-cell *matFooterCellDef></td>
+                      </ng-container>
+  
+                      <ng-container matColumnDef="subpredio">
+                        <th mat-header-cell *matHeaderCellDef>Subpredio</th>
+                        <td mat-cell *matCellDef="let row">{{ row.subpredio }}</td>
+                        <td mat-footer-cell *matFooterCellDef></td>
+                      </ng-container>
+  
+                      <ng-container matColumnDef="tasa">
+                        <th mat-header-cell *matHeaderCellDef>Tasa</th>
+                        <td mat-cell *matCellDef="let row">{{ row.idTasa }}</td>
+                        <td mat-footer-cell *matFooterCellDef></td>
+                      </ng-container>
+  
+                      <ng-container matColumnDef="fecha">
+                        <th mat-header-cell *matHeaderCellDef>Fecha</th>
+                        <td mat-cell *matCellDef="let row">{{ getFormatDate(row.fecha) }}</td>
+                        <td mat-footer-cell *matFooterCellDef></td>
+                      </ng-container>
+          
+                      <ng-container matColumnDef="folio">
+                        <th mat-header-cell *matHeaderCellDef>Folio</th>
+                        <td mat-cell *matCellDef="let row">{{ row.folio }}</td>
+                        <td mat-footer-cell *matFooterCellDef>Total</td>
+                      </ng-container>
+          
+                      <ng-container matColumnDef="importePagado">
+                        <th mat-header-cell *matHeaderCellDef>Importe pagado</th>
+                        <td mat-cell *matCellDef="let row">${{ row.importePagado | number: "1.2-2" }}</td>
+                        <td mat-footer-cell *matFooterCellDef>${{ getTotalPagado() }}</td>
+                      </ng-container>
+          
+                      <tr
+                        mat-header-row
+                        *matHeaderRowDef="paidColumns; sticky: true">
+                      </tr>
+                      <tr
+                        mat-row
+                        *matRowDef="let row; columns: paidColumns"
+                      ></tr>
+                      <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="8">
+                          No se encontraron datos de pagos.
+                        </td>
+                      </tr>
+                      <tr mat-footer-row *matFooterRowDef="paidColumns"></tr>
+                    </table>
+                  </div>
+                </section>
+              </div>
+            </mat-tab>
+      
+            <mat-tab [label]="'Historia (' + history.data.length + ')'">
+              <div class="shadow">
+                <section>
+                  <div class="data-table">
+                    <table mat-table [dataSource]="history">
+                      <ng-container matColumnDef="cuenta">
+                        <th mat-header-cell *matHeaderCellDef>Escritura</th>
+                        <td mat-cell *matCellDef="let row">{{ row.idCuenta }}</td>
+                      </ng-container>
+  
+                      <ng-container matColumnDef="recaudadora">
+                        <th mat-header-cell *matHeaderCellDef>Acto</th>
+                        <td mat-cell *matCellDef="let row">{{ row.recaudadora }}</td>
+                      </ng-container>
+  
+                      <ng-container matColumnDef="clave">
+                        <th mat-header-cell *matHeaderCellDef>Clave</th>
+                        <td mat-cell *matCellDef="let row">{{ row.clave }}</td>
+                      </ng-container>
+  
+                      <ng-container matColumnDef="subpredio">
+                        <th mat-header-cell *matHeaderCellDef>Subpredio</th>
+                        <td mat-cell *matCellDef="let row">{{ row.subpredio }}</td>
+                      </ng-container>
+  
+                      <ng-container matColumnDef="movimineto">
+                        <th mat-header-cell *matHeaderCellDef>Movimiento</th>
+                        <td mat-cell *matCellDef="let row">{{ row.idMovimineto }}</td>
+                      </ng-container>
+  
+                      <ng-container matColumnDef="descripcion">
+                        <th mat-header-cell *matHeaderCellDef>Descripción</th>
+                        <td mat-cell *matCellDef="let row">{{ row.descripcion }}</td>
+                      </ng-container>
+          
+                      <ng-container matColumnDef="yearComprobante">
+                        <th mat-header-cell *matHeaderCellDef>Año comprobante</th>
+                        <td mat-cell *matCellDef="let row">{{ row.yearComprobante }}</td>
+                      </ng-container>
+          
+                      <ng-container matColumnDef="folioComprobante">
+                        <th mat-header-cell *matHeaderCellDef>Folio comprobante</th>
+                        <td mat-cell *matCellDef="let row">{{ row.folioComprobante }}</td>
+                      </ng-container>
+          
+                      <tr
+                        mat-header-row
+                        *matHeaderRowDef="historyColumns; sticky: true">
+                      </tr>
+                      <tr
+                        mat-row
+                        *matRowDef="let row; columns: historyColumns"
+                      ></tr>
+                      <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="8">
+                          No se encontraron datos históricos.
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </section>
+              </div>
+            </mat-tab>
+          </mat-tab-group>
+        </section>
+        <div class="informe-section">
+          <button mat-flat-button color="primary" (click)="getReportPredio()" [disabled]="predioSelected.idPredio === ''">
+            Ficha técnica
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<sic-backdrop [backdropMessage]="backdropMessage" [showingLoading]="showLoading"></sic-backdrop>

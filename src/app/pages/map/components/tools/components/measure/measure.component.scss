@@ -1,0 +1,107 @@
+@import "./../../../../../../../variables";
+
+.measure-container {
+  position: absolute;
+  top: 80px;
+  right: 64px;
+  width: 100%;
+  max-width: 338px !important;
+
+  max-height: calc(100% - 80px) !important;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  padding: 8px;
+  background-color: white !important;
+
+  border: 0;
+
+  z-index: 500;
+
+  .radio-group {
+    display: flex;
+    flex-direction: column;
+    margin: 12px 6px;
+  }
+
+  .radio-button {
+    margin: 5px;
+  }
+
+  .snap-container {
+    display: flex;
+    flex-direction: row;
+    margin-left: 14px;
+    mat-icon {
+      margin: 12px !important;
+    }
+    .snap-label {
+      margin-top: 12px;
+    }
+  }
+
+  .label-container {
+    display: flex;
+
+    mat-icon {
+      margin: 0 0 0 12px;
+    }
+
+    div {
+      margin: 3px 12px 0 12px;
+    }
+  }
+
+  select, input {
+    border: none;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.5;
+    padding: 6px 12px;
+    color: #495057;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    width: 100%;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+    &:focus {
+      outline: none;
+      background-color: #fff;
+      border-color: $map-control-button;
+      box-shadow: 0 0 0 0.2rem rgba($color: $map-control-button, $alpha: 0.25);
+    }
+  }
+}
+
+.measure-title {
+  background: rgba($color: $tool-header-background, $alpha: 1);
+  height: 48px;
+  color: white;
+  font-size: 16pt;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: -8px -8px 0 -8px;
+}
+
+@media screen and (max-width: 850px) {
+  .measure-container {
+    top: calc(1em + 104px + 1.5em);
+    left: 3em;
+    max-width: 160px !important;
+    max-height: 160px !important;
+  }
+}
+
+.dragdrop-handle {
+  color: #fff;
+  cursor: move;
+  width: 24px;
+  height: 24px;
+}
+
+.flex-blank-filler {
+  flex: 1 1 auto;
+  margin-left: 106px;
+}

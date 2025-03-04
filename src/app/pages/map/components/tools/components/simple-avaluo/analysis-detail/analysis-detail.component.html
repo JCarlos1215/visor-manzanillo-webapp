@@ -1,0 +1,264 @@
+<div cdkDrag cdkDragRootElement=".cdk-overlay-pane">
+  <div class="dialog-title">
+    <mat-icon>description</mat-icon>
+    <div class="dragdrop-handle" cdkDragHandle>
+      <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
+        <path d="M0 0h24v24H0z" fill="none"></path>
+      </svg>
+    </div>
+    <span class="flex-blank-filler">
+      {{ title }}
+    </span>
+    <button mat-icon-button (click)="callClose()">
+      <mat-icon> close </mat-icon>
+    </button>
+  </div>
+  
+  <div class="analysis-detail-container">
+    <div class="detail-content">
+      <div class="shadow">
+        <header>
+          Datos del predio
+        </header>
+        <section>
+          <table>
+            <tbody>
+              <tr>
+                <td class="attribute">Clave</td>
+                <td class="attribute">CURT</td>
+                <td class="attribute">Predio</td>
+                <!--<td class="attribute">Unidad</td>
+                <td class="attribute">Edificio</td>
+                <td class="attribute">Folio</td>-->
+              </tr>
+              <tr>
+                <td class="value">{{ avaluo.predio.formattedClave }}</td>
+                <td class="value">{{ avaluo.predio.CURT }}</td>
+                <td class="value">{{ avaluo.predio.predio }}</td>
+                <!--<td class="value">{{ avaluo.predio.unidad }}</td>
+                <td class="value">{{ avaluo.predio.edificio }}</td>
+                <td class="value">{{ avaluo.predio.folioreal }}</td>-->
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </div>
+      <div class="shadow">
+        <header>
+          Valores
+        </header>
+        <section>
+          <table>
+            <tbody>
+              <tr>
+                <td class="attribute">Valor de terreno</td>
+                <td class="attribute">Valor de construcción</td>
+                <td class="attribute">Valor catastral</td>
+                <td class="attribute">Superficie de construcción total</td>
+              </tr>
+              <tr>
+                <td class="value">${{ avaluo.totalTerrainCornerValue | number: "1.2-2" }}</td>
+                <td class="value">${{ avaluo.totalConstructionValue| number: "1.2-2" }}</td>
+                <td class="value">${{ avaluo.totalValue | number: "1.2-2" }}</td>
+                <td class="value">{{ avaluo.totalConstruction | number: "1.2-2" }}m<sup>2</sup></td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </div>
+      <div class="shadow">
+        <header>
+          Ubicación del predio en Padrón Catastral
+        </header>
+        <section>
+          <table>
+            <tbody>
+              <tr>
+                <td class="attribute">Ubicación</td>
+                <td class="attribute">Número exterior</td>
+                <td class="attribute">Número interior</td>
+                <td class="attribute">Colonia</td>
+                <td class="attribute">Área</td>
+              </tr>
+              <tr>
+                <td class="value">{{ avaluo.ubication.ubicacion }}</td>
+                <td class="value">{{ avaluo.ubication.numeroExterior }}</td>
+                <td class="value">{{ avaluo.ubication.numeroInterior }}</td>
+                <td class="value">{{ avaluo.ubication.colonia }}</td>
+                <td class="value">{{ avaluo.ubication.areaTitulo }}m<sup>2</sup></td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </div>
+      <div class="shadow">
+        <header>
+          Clasificación del predio
+        </header>
+        <section>
+          <table>
+            <tbody>
+              <tr>
+                <td class="attribute">Clasificación</td>
+                <td class="attribute">Área</td>
+                <td class="attribute">Perímetro</td>
+              </tr>
+              <tr>
+                <td class="value">{{ avaluo.clasification }}</td>
+                <td class="value">{{ avaluo.clave.areaCartografica | number: "1.2-2" }}m<sup>2</sup></td>
+                <td class="value">{{ avaluo.clave.perimetro | number: "1.2-2" }}m</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </div>
+      <div class="shadow">
+        <header>Frentes</header>
+        <section>
+          <div class="analysis-table">
+            <table mat-table [dataSource]="fronts">
+              <ng-container matColumnDef="numero">
+                <th mat-header-cell *matHeaderCellDef>#</th>
+                <td mat-cell *matCellDef="let row">{{ row.numero }}</td>
+              </ng-container>
+  
+              <ng-container matColumnDef="calle">
+                <th mat-header-cell *matHeaderCellDef>Calle</th>
+                <td mat-cell *matCellDef="let row">{{ row.calle }}</td>
+              </ng-container>
+  
+              <ng-container matColumnDef="longitud">
+                <th mat-header-cell *matHeaderCellDef>Longitud</th>
+                <td mat-cell *matCellDef="let row">{{ row.medida | number: "1.2-2" }}m</td>
+              </ng-container>
+  
+              <ng-container matColumnDef="valorZona">
+                <th mat-header-cell *matHeaderCellDef>Valor de zona</th>
+                <td mat-cell *matCellDef="let row">${{ row.valorZona | number: "1.2-2" }}</td>
+              </ng-container>
+  
+              <ng-container matColumnDef="valorCalle">
+                <th mat-header-cell *matHeaderCellDef>Valor de calle</th>
+                <td mat-cell *matCellDef="let row">${{ row.valorCalle | number: "1.2-2" }}</td>
+              </ng-container>
+  
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef colspan="1">Acciones</th>
+                <td mat-cell *matCellDef="let row">
+                  <button
+                    mat-icon-button
+                    color="primary"
+                    matTooltip="Ver frente en StreetView"
+                    (click)="openGoogleMaps(row)"
+                  >
+                    <mat-icon>streetview</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+  
+              <tr
+                mat-header-row
+                *matHeaderRowDef="frontColumns; sticky: true">
+              </tr>
+              <tr
+                mat-row
+                *matRowDef="let row; columns: frontColumns"
+              ></tr>
+              <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="6">
+                  No se encontraron datos de frentes.
+                </td>
+              </tr>
+            </table>
+          </div>
+        </section>
+      </div>
+      <div class="shadow">
+        <header>Construcciones ({{ constructions.data.length }})</header>
+        <section>
+          <div class="analysis-table">
+            <table mat-table [dataSource]="constructions">
+              <ng-container matColumnDef="numero">
+                <th mat-header-cell *matHeaderCellDef>#</th>
+                <td mat-cell *matCellDef="let row">{{ row.numero }}</td>
+              </ng-container>
+  
+              <ng-container matColumnDef="bloque">
+                <th mat-header-cell *matHeaderCellDef>Bloque</th>
+                <td mat-cell *matCellDef="let row">{{ row.bloque }}</td>
+              </ng-container>
+  
+              <ng-container matColumnDef="nivel">
+                <th mat-header-cell *matHeaderCellDef>Niveles</th>
+                <td mat-cell *matCellDef="let row">{{ row.nivel }}</td>
+              </ng-container>
+  
+              <ng-container matColumnDef="area">
+                <th mat-header-cell *matHeaderCellDef>Área</th>
+                <td mat-cell *matCellDef="let row">{{ row.sc | number: "1.2-2" }}m<sup>2</sup></td>
+              </ng-container>
+  
+              <ng-container matColumnDef="clasificacion">
+                <th mat-header-cell *matHeaderCellDef>Clasificación</th>
+                <td mat-cell *matCellDef="let row">{{ row.ce }}</td>
+              </ng-container>
+  
+              <ng-container matColumnDef="valor">
+                <th mat-header-cell *matHeaderCellDef>Valor</th>
+                <td mat-cell *matCellDef="let row">${{ row.valor | number: "1.2-2" }}</td>
+              </ng-container>
+  
+              <tr
+                mat-header-row
+                *matHeaderRowDef="constructionColumns; sticky: true">
+              </tr>
+              <tr
+                mat-row
+                *matRowDef="let row; columns: constructionColumns;"
+                class="row-pointer" 
+                (click)="moveToGeom(row)"
+              ></tr>
+              <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="6">
+                  No se encontraron datos de construcciones.
+                </td>
+              </tr>
+            </table>
+          </div>
+        </section>
+        <!--<div>
+          <br>
+          <label for="folio">
+            <span>Folio</span>
+            <input class="control folio" id="folio" type="number" [formControl]="folio">
+          </label>
+          <br>
+          <label for="comment" class="comment-label">
+            <span>Comentario</span>
+            <textarea class="control" id="comment" type="text" [formControl]="comment" rows="3" cols="30"></textarea>
+          </label>
+        </div>-->
+        <div *ngIf="showResult">
+          <br>
+          <div class="result-container" [ngClass]="{'correct': resultCorrect}">
+            {{ resultMessage }}
+          </div>
+        </div>
+        <div class="informe-section">
+          <button *ngIf="canPrintAvaluo" mat-flat-button color="primary" (click)="getReportAvaluo('c')">
+            Imprimir avalúo cartográfico
+          </button>
+          <button *ngIf="canPrintAvaluo" mat-flat-button color="primary" (click)="getReportAvaluo('p')">
+            Imprimir avalúo padrón catastral
+          </button>
+          <!--<button *ngIf="canSendSICAM" mat-flat-button color="primary" (click)="sendData()" [disabled]="comment.value.length < 5">
+            Enviar a SICAM
+          </button>-->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<sic-backdrop [backdropMessage]="backdropMessage" [showingLoading]="showLoading"></sic-backdrop>

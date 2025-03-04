@@ -1,0 +1,45 @@
+<div class="avaluo-multiple-container mat-elevation-z2">
+  <div class="avaluo-multiple-title">
+    Avalúo masivo
+  </div>
+  <div class="avaluo-multiple-content">
+    <select [(ngModel)]="layerSelected" (change)="handleSelectLayer()" name="selectLayer">
+      <option selected disabled value="">Selecciona capa</option>
+      <option ngValue="Manzana">Manzana</option>
+      <option ngValue="Colonia">Colonia</option>
+      <option ngValue="ZonaCatastral">Zona catastral</option>
+    </select>
+
+    <div *ngIf="showClipMap; else deleteAvaluos">
+      <p>Selecciona {{ toMultipleValue }} para avalúo multiple</p>
+    </div>
+    <ng-template #deleteAvaluos>
+      <button *ngIf="canDeleteAllAvaluos" mat-flat-button color="primary" (click)="showQuestionDeleteAvaluos = true">Borrar avaluos</button>
+    </ng-template>
+
+    <div *ngIf="hasValidCoords">
+      <p>{{ typeSelectedObject }}</p>
+      <button mat-flat-button color="primary" (click)="generateAvaluoMultiple()">Generar multiples avaluos</button>
+    </div>
+    
+    <div *ngIf="showQuestionDeleteAvaluos">
+      <label for="questionDelete">
+        <span>Se borrarán todos los avaluos, ¿Estás seguro?</span>
+      </label>
+      <label for="answerDelete">
+        <button mat-flat-button color="primary" (click)="deleteAvaluoMultiple()">
+          Si
+        </button>
+        <button mat-flat-button color="primary" class="no-option" (click)="showQuestionDeleteAvaluos = false">
+          No
+        </button>
+      </label>
+    </div>
+
+    <div *ngIf="showResult" class="result-container" [ngClass]="{'correct': resultCorrect}">
+      {{ resultMessage }}
+    </div>
+  </div>
+</div>
+
+<sic-backdrop [backdropMessage]="backdropMessage" [showingLoading]="showLoading"></sic-backdrop>

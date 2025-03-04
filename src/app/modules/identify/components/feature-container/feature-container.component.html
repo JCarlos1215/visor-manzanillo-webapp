@@ -1,0 +1,11 @@
+<header class="attribute-header">
+  {{ feature.name }}
+</header>
+<div *ngFor="let prop of feature.properties" class="feature-content">
+  <span class="attribute-name">
+    {{ filterKey(prop.key) }}
+  </span>
+  <span class="attribute-value">
+    {{ prop.value }}
+  </span>
+</div>

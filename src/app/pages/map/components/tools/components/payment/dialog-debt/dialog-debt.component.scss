@@ -1,0 +1,88 @@
+@import "./../../../../../../../../variables";
+
+.table-container {
+  height: 352px;
+  overflow: auto;
+}
+
+table {
+  width: 100%;
+
+  th.mat-header-cell {
+    font-size: 10pt;
+    font-weight: 800;
+    color: black;
+  }
+
+  td.mat-cell{
+    font-size: 8pt;
+  }
+
+  tr.row-pointer:hover {
+    background: whitesmoke;
+  }
+
+  td, th {
+    text-align: center;
+  }
+}
+
+tr.mat-footer-row {
+  font-weight: bold;
+}
+
+.dialog-title {
+  background: rgba($color: $tool-header-background, $alpha: 1);
+  height: 48px;
+  color: $tool-header-font-color;
+  font-size: 16pt;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: -24px -24px 0 -24px;
+}
+
+.flex-blank-filler {
+  flex: 1 1 auto;
+  margin-left: 16px;
+}
+
+mat-dialog-content {
+  padding: 0;
+  max-height: 84vh;
+}
+
+.filter-container {
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  margin: 0 16px 0 16px;
+
+  mat-form-field {
+    flex: 50%;
+  }
+
+  .total-info {
+    flex: 50%;
+    text-align: end;
+    font-weight: 700;
+  }
+}
+
+.button-container {
+  flex: 50%;
+  text-align: end;
+  padding-right: 3%;
+
+  button {
+    margin-left: 8px;
+  }
+}
+
+.dragdrop-handle {
+  color: #fff;
+  cursor: move;
+  width: 24px;
+  height: 24px;
+}

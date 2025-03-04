@@ -1,0 +1,38 @@
+:host {
+  position: fixed;
+  top: 0;
+  right: 540px;
+}
+
+.user-container {
+  max-width: 360px;
+
+  display: inline-flex;
+  flex-direction: row;
+
+  align-items: center;
+
+  background-color: rgba(white, 0);
+  box-shadow: unset;
+}
+
+.user-data {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .user-name {
+    font-weight: bold;
+  }
+  .user-company {
+    font-size: smaller;
+  }
+}
+
+.icon {
+  margin-left: 16px;
+  svg {
+    height: 36px;
+  }
+}

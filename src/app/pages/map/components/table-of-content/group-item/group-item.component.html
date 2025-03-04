@@ -1,0 +1,19 @@
+<mat-expansion-panel *ngIf="!isLayer; else layerIs" class="rollo">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <img *ngIf="group.icon != ''" [src]="getIcon(group.icon)" alt="grupo" />
+      <span class="group-label">
+        {{ group.title }}
+      </span>
+      <!--<mat-slide-toggle
+        (click)="exclusiveClick($event)"
+        (change)="toggleAll(group)"
+        [checked]="group.IsActive"
+      ></mat-slide-toggle>-->
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <sic-group-item *ngFor="let child of group.children" [group]="child"></sic-group-item>
+</mat-expansion-panel>
+<ng-template #layerIs>
+  <sic-layer-item [contenido]="group"></sic-layer-item>
+</ng-template>

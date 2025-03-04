@@ -1,0 +1,12 @@
+<div mat-dialog-title>
+  <h4>{{ data.title }}</h4>
+</div>
+
+<div mat-dialog-content>
+  <p>{{ data.question }}</p>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button color="warn" (click)="actionSelected(false)">{{ data.answerNo }}</button>
+  <button mat-flat-button color="primary" (click)="actionSelected(true)">{{ data.answerYes }}</button>
+</div>

@@ -1,0 +1,101 @@
+@import "./../../../../../variables";
+
+:host {
+  position: absolute;
+  bottom: 12px;
+  left: -145px;
+  width: 300px;
+  max-height: 260px;
+
+  // background: rgba($primary-background-color, 0.9);
+  background: rgba($color: white, $alpha: 0.9);
+  padding: 0;
+
+  box-shadow: 3px 3px 28px #00001d;
+}
+
+.close-button {
+  position: absolute;
+  right: 0;
+  top: -6px;
+
+  mat-icon {
+    color: white;
+  }
+}
+
+.identify-container-title {
+  // background: rgba($secondary-background-color, 1);
+  background: rgba($color: $identify-title-background-color, $alpha: 1);
+  height: 48px;
+  color: white;
+  font-size: 16pt;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.identify-container-body {
+  max-height: 210px;
+  font-size: 9pt;
+  margin-bottom: 10px;
+  overflow-y: auto;
+
+  .layer-title {
+    font-size: 11pt;
+    font-weight: bold;
+    padding: 3px 10px;
+    // background-color: rgba($secondary-background-color, 0.5);
+    background-color: rgba($color: $identify-title-background-color, $alpha: 0.5);
+  }
+}
+
+.noinfo-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+}
+
+:host:after,
+.ol-popup:before {
+  top: 100%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+:host:after {
+  // border-top-color: rgba($secondary-background-color, 0.9);
+  border-top-color: rgba($color: $identify-title-background-color, $alpha: 0.9);
+  border-width: 10px;
+  left: 145px;
+  margin-left: -10px;
+}
+
+@media screen and (max-width: 600px) {
+  :host {
+    width: 340px;
+    max-height: 320px;
+  }
+
+  .close-button {
+    width: 36px;
+    height: 46px;
+    line-height: unset;
+  }
+
+  .identify-container-title {
+    height: 36px;
+    font-size: 12pt;
+  }
+
+  .identify-container-body {
+    max-height: 270px;
+    font-size: 10pt;
+  }
+}

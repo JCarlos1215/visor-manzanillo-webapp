@@ -1,0 +1,85 @@
+@import "./../../../../../variables";
+
+.dialog-title {
+  background: rgba($color: $tool-header-background, $alpha: 1);
+  height: 48px;
+  color: $tool-header-font-color;
+  font-size: 16pt;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: -24px -24px 0 -24px;
+}
+
+.flex-blank-filler {
+  flex: 1 1 auto;
+  margin-left: 16px;
+}
+
+.identify-element-container {
+  font-size: 10pt;
+  max-height: 286px;
+  width: 300px;
+  overflow-y: auto;
+  margin-left: -10px;
+
+  .element-item {
+    margin-top: 10px;
+  }
+
+  .feature-content {
+    overflow-wrap: break-word;
+  }
+  
+  .attribute-name {
+    display: inline-block;
+    width: 80px;
+    text-align: left;
+    font-weight: bold;
+    overflow-wrap: break-word;
+    vertical-align: top;
+  }
+  
+  .attribute-value {
+    display: inline-block;
+    width: 150px;
+    text-align: left;
+    font-weight: normal;
+    margin-left: 10px;
+  }
+
+  .feature-title {
+    display: block;
+    width: 98%;
+    font-size: 12pt;
+    font-weight: bold;
+    padding: 4px 110px;
+    background-color: rgba($color: $identify-title-background-color, $alpha: 0.5);
+  }
+
+  button {
+    width: 98%;
+  }
+}
+
+@media screen and (min-width: 400px) {
+  .identify-element-container {
+    width: 280px;
+    
+    .attribute-name {
+      width: 98px;
+    }
+  
+    .attribute-value {
+      width: 154px;
+    }
+  }
+}
+
+.dragdrop-handle {
+  color: #fff;
+  cursor: move;
+  width: 24px;
+  height: 24px;
+}

@@ -1,0 +1,113 @@
+// Agrega paletas de colores para el tema de angular material
+$visor-manzanillo-primary-color-palette: (
+  50: #e9f3e9,
+  100: #c7e2c7,
+  200: #a2cea2,
+  300: #7cba7c,
+  400: #60ac60,
+  500: #b51e1c,
+  600: #3e953e,
+  700: #358b35,
+  800: #2d812d,
+  900: #1f6f1f,
+  A100: #adffad,
+  A200: #7aff7a,
+  A400: #47ff47,
+  A700: #2eff2e,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);
+
+$visor-manzanillo-accent-color-palette: (
+  50: #e4e6e7,
+  100: #bcc0c3,
+  200: #90969c,
+  300: #636b74,
+  400: #414c56,
+  500: #e4b346,
+  600: #1c2732,
+  700: #18212b,
+  800: #131b24,
+  900: #0b1017,
+  A100: #5a98ff,
+  A200: #2778ff,
+  A400: #005bf3,
+  A700: #0052da,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #ffffff,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #ffffff,
+    A400: #ffffff,
+    A700: #ffffff,
+  ),
+);
+
+$visor-manzanillo-warn-color-palette: (
+  50: #f8e5e6,
+  100: #ecbec0,
+  200: #e09396,
+  300: #cf652e,
+  400: #ca474d,
+  500: #c1272d,
+  600: #bb2328,
+  700: #b31d22,
+  800: #ab171c,
+  900: #9e0e11,
+  A100: #ffcdce,
+  A200: #ff9a9b,
+  A400: #ff6769,
+  A700: #ff4d50,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000
+  )
+);
+
+// Colores para los elementos del mapa
+$map-control-button: #b51e1c;
+$map-side-panel-header-background: #b51e1c;
+$map-tools-background: #b51e1c;
+$map-tools-icon-color: #ffffff;
+$tool-header-background: #b51e1c;
+$tool-header-font-color: #ffffff;
+$tool-body-background: #ffffff;
+$result-header-background: #b51e1c;
+$result-header-font-color: #ffffff;
+$identify-title-background-color: #b51e1c;
+$primary-color: #e4b346;
+$secondary-color: #202c38;

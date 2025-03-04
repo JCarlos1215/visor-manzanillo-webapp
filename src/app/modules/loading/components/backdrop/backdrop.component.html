@@ -1,0 +1,10 @@
+<div class="backdrop" [ngClass]="{ active: showingLoading }">
+  <mat-card>
+    <div class="loading-info">
+      <mat-spinner></mat-spinner>
+      <span>
+        {{ backdropMessage }}
+      </span>
+    </div>
+  </mat-card>
+</div>

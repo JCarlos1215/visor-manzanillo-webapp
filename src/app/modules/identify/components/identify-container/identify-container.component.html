@@ -1,0 +1,16 @@
+<button mat-icon-button class="close-button" (click)="callClose()">
+  <mat-icon> close </mat-icon>
+</button>
+<div class="identify-container-title">Identifica</div>
+<div class="identify-container-body">
+  <div *ngFor="let layer of elements">
+    <div class="layer-title">{{ layer.name }}</div>
+    <sic-feature-container
+      *ngFor="let feature of layer.layers"
+      [feature]="feature"
+    ></sic-feature-container>
+    <div *ngIf="layer.layers.length === 0" class="noinfo-text">
+      No se encontró información en este punto
+    </div>
+  </div>
+</div>

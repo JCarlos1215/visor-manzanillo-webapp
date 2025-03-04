@@ -1,0 +1,192 @@
+<div class="print-container mat-elevation-z2" cdkDrag>
+  <div class="print-title">
+    <div class="dragdrop-handle" cdkDragHandle>
+      <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
+        <path d="M0 0h24v24H0z" fill="none"></path>
+      </svg>
+    </div>
+    <span class="flex-blank-filler">Impresión de planos</span>
+  </div>
+
+  <div *ngIf="printOption === ''">
+    <p class="print-list">
+      <button *ngIf="canPrintSimple"  mat-flat-button color="primary" (click)="selectPrintOption('simple')" title="Plano simple">
+        Plano simple
+      </button>
+      <button *ngIf="canPrintCertificate" mat-flat-button color="primary" (click)="selectPrintOption('certificado')" title="Plano certificado">
+        Plano certificado
+      </button>
+      <!--<button mat-flat-button color="primary" disabled="true" (click)="selectPrintOption('alineamiento')" title="Alineamiento y número oficial">
+        Alineamiento y número oficial
+      </button>
+      <button mat-flat-button color="primary" disabled="true" (click)="selectPrintOption('patrimonio')" title="Patrimonio">
+        Patrimonio
+      </button>-->
+    </p>
+  </div>
+
+  <div *ngIf="printOption === 'simple'">
+    <div class="simple-container">
+      <p> {{ printOptionTitle }} </p>
+
+      <select class="control" name="typeGeom" id="typeGeom" (change)="handleSelectGeom($event)">
+        <option selected disabled value="">Selecciona objeto geométrico</option>
+        <option value="predio">Predio</option>
+        <option value="manzana">Manzana</option>
+      </select>
+      
+
+      <div *ngIf="typeGeomSelected !== ''">
+        <p>Selecciona {{ typeGeomSelected }} en el mapa</p>
+      </div>
+
+      <div *ngIf="hasValidCoords">
+        <select class="size-page" (change)="handleSelectPageSize($event)">
+          <option selected disabled value="">Tamaño de hoja</option>
+          <option value="carta">Carta</option>
+          <option value="oficio">Oficio</option>
+          <option value="tabloide">Tabloide</option>
+          <option value="60">60 x 60</option>
+          <option value="90">90 x 90</option>
+        </select>
+
+        <select (change)="handleSelectScala($event)">
+          <option selected disabled value="">Método de escala</option>
+          <option value="fijo">Fijo</option>
+          <option value="dinamico">Dinámico</option>
+          <option value="personalizado">Personalizado</option>
+        </select>
+
+        <label *ngIf="scala === 'personalizado'" for="personalScala">
+          <span>Escala personalizada</span>
+          <input class="control" id="personalScala" type="number" [formControl]="personalScala" />
+        </label>
+
+        <label for="referencia">
+          <span>Nota / Observación</span>
+          <textarea class="control" id="referencia" type="text" [formControl]="observation" rows="3" cols="10" placeholder="Este texto aparecerá al pie del plano."></textarea>
+        </label>
+
+        <!--<label for="monto">
+          <span>Monto</span>
+          <input class="control" id="monto" type="number" [formControl]="monto" />
+        </label>
+
+        <mat-form-field class="datepicker">
+          <mat-label>Fecha de pago</mat-label>
+          <input matInput [matDatepicker]="paydaySimple" disabled [(ngModel)]="fechaPago">
+          <mat-datepicker-toggle matIconSuffix [for]="paydaySimple"></mat-datepicker-toggle>
+          <mat-datepicker #paydaySimple disabled="false"></mat-datepicker>
+        </mat-form-field>-->
+
+        <button [disabled]="!validateDataSimplePlano()" mat-flat-button color="primary" (click)="getSimplePlano()" title="Obtener plano simple">
+          Imprimir
+        </button>
+        
+      </div>
+    </div>
+    <div class="volver-button">
+      <button mat-flat-button color="primary" (click)="selectPrintOption('')" title="Volver">
+        Volver
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="printOption === 'certificado'">
+    <p> {{ printOptionTitle }} </p>
+
+    <select class="control" name="typeGeom" id="typeGeom" (change)="handleSelectGeom($event)">
+      <option selected disabled value="">Selecciona objeto geométrico</option>
+      <option value="predio">Predio</option>
+      <option value="manzana">Manzana</option>
+    </select>
+    
+
+    <div *ngIf="typeGeomSelected !== ''">
+      <p>Selecciona {{ typeGeomSelected }} en el mapa</p>
+    </div>
+
+    <div *ngIf="hasValidCoords">
+      <select class="size-page" (change)="handleSelectPageSize($event)">
+        <option selected disabled value="">Tamaño de hoja</option>
+        <option value="carta">Carta</option>
+        <option value="oficio">Oficio</option>
+        <option value="tabloide">Tabloide</option>
+        <option value="60">60 x 60</option>
+        <option value="90">90 x 90</option>
+      </select>
+
+      <select (change)="handleSelectScala($event)">
+        <option selected disabled value="">Método de escala</option>
+        <option value="fijo">Fijo</option>
+        <option value="dinamico">Dinámico</option>
+        <option value="personalizado">Personalizado</option>
+      </select>
+
+      <label *ngIf="scala === 'personalizado'" for="personalScala">
+        <span>Escala personalizada</span>
+        <input class="control" id="personalScala" type="number" [formControl]="personalScala" />
+      </label>
+
+      <label for="folio">
+        <span>Folio</span>
+        <input class="control" id="folio" type="text" [formControl]="folio"/> 
+        <!--(keyup)="getCertificadoData()" />-->
+      </label>
+
+      <label for="applicant">
+        <span>Solicitante</span>
+        <input class="control" id="applicant" type="text" [formControl]="applicant"/>
+      </label>
+
+      <label for="printer">
+        <span>Imprime</span>
+        <input class="control" id="printer" type="text" [formControl]="printer" />
+      </label>
+
+      <label for="capture">
+        <span>Captura</span>
+        <input class="control" id="capture" type="text" [formControl]="capture" />
+      </label>
+
+      <label for="verify">
+        <span>Revisa</span>
+        <input class="control" id="verify" type="text" [formControl]="verify" />
+      </label>
+
+      <label for="referencia">
+        <span>Nota / Observación</span>
+        <textarea class="control" id="referencia" type="text" [formControl]="observation" rows="3" cols="10" placeholder="Este texto aparecerá al pie del plano."></textarea>
+      </label>
+
+      <!--<label for="monto">
+        <span>Monto</span>
+        <input class="control" id="monto" type="number" [formControl]="monto" />
+      </label>-->
+
+      <label *ngIf="typeGeomSelected === 'predio'" for="escritura">
+        <span>Medidas según escritura</span>
+        <mat-checkbox [checked]="activateLegal" [(ngModel)]="activateLegal"></mat-checkbox>
+      </label>
+
+      <!--<mat-form-field class="datepicker">
+        <mat-label>Fecha de pago</mat-label>
+        <input matInput [matDatepicker]="paydayCertificado" disabled [(ngModel)]="fechaPago">
+        <mat-datepicker-toggle matIconSuffix [for]="paydayCertificado"></mat-datepicker-toggle>
+        <mat-datepicker #paydayCertificado disabled="false"></mat-datepicker>
+      </mat-form-field>-->
+
+      <button [disabled]="!validateDataPlanoCertificado()" mat-flat-button color="primary" (click)="getPlanoCertificado()" title="Obtener plano certificado">
+        Imprimir
+      </button>
+      
+    </div>
+
+    <button mat-flat-button color="primary" (click)="selectPrintOption('')" title="Volver">
+      Volver
+    </button>
+  </div>
+</div>
+
+<sic-backdrop [backdropMessage]="backdropMessage" [showingLoading]="showLoading"></sic-backdrop>

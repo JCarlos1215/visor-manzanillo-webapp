@@ -1,0 +1,576 @@
+<div role="main">
+  <header class="fixed-top">
+    <h2>
+      PANEL DE ADMINISTRACIÓN
+      <!-- Panel de administración SIMICEG -->
+    </h2>
+    <div class="data-container">
+      <div class="user-container">
+        <div class="user-data">
+          <div class="user-name">
+            {{ user.FullName }}
+          </div>
+          <div class="user-company">
+            {{ user.Company }}
+          </div>
+        </div>
+        <div class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 43.5 49.75">
+            <defs>
+              <style>
+                .cls-1 {
+                  fill: #222220;
+                }
+              </style>
+            </defs>
+            <title>user</title>
+            <g id="Capa_2" data-name="Capa 2">
+              <g id="Capa_1-2" data-name="Capa 1">
+                <path
+                  class="cls-1"
+                  d="M32.53,7.56h0a.28.28,0,0,0-.06-.15A11.47,11.47,0,0,0,21.75,0a11.15,11.15,0,0,0-6.07,1.76.39.39,0,0,0-.11.06A11.27,11.27,0,0,0,11,7.61a.35.35,0,0,0-.06.14s0,.07,0,.1a10.79,10.79,0,0,0-.62,3.64,11.5,11.5,0,1,0,23,0A10.82,10.82,0,0,0,32.53,7.56ZM21.75,21.62A10.11,10.11,0,0,1,12.09,8.46a5.76,5.76,0,0,0,1.2.11c2.13,0,4.71-.83,5.91-2.69a18.06,18.06,0,0,0,9.42,2.54,17.53,17.53,0,0,0,2.7-.2,9.84,9.84,0,0,1,.55,3.27A10.13,10.13,0,0,1,21.75,21.62Z"
+                />
+                <path
+                  class="cls-1"
+                  d="M33.75,24.25h-24A9.76,9.76,0,0,0,0,34V49.75H43.5V34A9.76,9.76,0,0,0,33.75,24.25Zm-5.6,1.5-1,3.2-2.26-3.2Zm-9.53,0L16.36,29l-1-3.2Zm4.06,22.5H10.5V34H9V48.25H1.5V34a8.26,8.26,0,0,1,8.25-8.25h4l2.08,6.53,4.61-6.53h2.22Zm19.32,0H34.5V34H33V48.25H24.18V27.36l3.47,4.92,2.08-6.53h4A8.26,8.26,0,0,1,42,34Z"
+                />
+                <circle class="cls-1" cx="20.82" cy="27.81" r="0.75" />
+                <circle class="cls-1" cx="20.82" cy="33.25" r="0.75" />
+                <circle class="cls-1" cx="20.82" cy="38.69" r="0.75" />
+                <circle class="cls-1" cx="20.82" cy="44.14" r="0.75" />
+              </g>
+            </g>
+          </svg>
+        </div>
+      </div>
+      
+      <button mat-flat-button color="primary" (click)="openMap()">
+        <mat-icon> map</mat-icon>
+        Volver al mapa
+      </button>
+    </div>
+    <div class="logo">
+      <img src="./assets/icons/logo_mzo.png" alt="logo" />
+    </div>
+  </header>
+
+  <div class="admin-panel-container">
+    <div class="admin-panel-content">
+      <mat-tab-group (selectedTabChange)="selectedTab($event)">
+        <mat-tab label="Usuarios">
+          <div *ngIf="view === 'user-list'">
+            <div class="section-content">
+              <mat-icon>person</mat-icon>
+              <span class="flex-blank-filler">
+                Lista de usuarios
+              </span>
+              <button mat-icon-button (click)="changeView('user-new')" title="Crear nuevo usuario">
+                <mat-icon>person_add</mat-icon>
+              </button>
+            </div>
+            <div>
+              <div *ngIf="showResult" class="result-container" [ngClass]="{'correct': resultCorrect}">
+                {{ resultMessage }}
+              </div>
+              <div class="filter-container">
+                <mat-form-field>
+                  <mat-label>Filtro</mat-label>
+                  <input matInput (keyup)="applyFilterUser($event)" placeholder="Filtro" #inputUser>
+                </mat-form-field>
+                <span class="total-info">
+                  Total de usuarios: {{ usuarios.data.length | number: "1.0-0" }}
+                </span>
+              </div>
+              <div class="mat-elevation-z8">
+                <div class="data-table">
+                  <table mat-table [dataSource]="usuarios">
+                    <ng-container matColumnDef="apellido">
+                      <th mat-header-cell *matHeaderCellDef>Apellido</th>
+                      <td mat-cell *matCellDef="let row">{{ row.surname }}</td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="nombre">
+                      <th mat-header-cell *matHeaderCellDef>Nombre</th>
+                      <td mat-cell *matCellDef="let row">{{ row.givenname }}</td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="rol">
+                      <th mat-header-cell *matHeaderCellDef>Rol</th>
+                      <td mat-cell *matCellDef="let row">{{ row.rol }}</td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="username">
+                      <th mat-header-cell *matHeaderCellDef>Usuario</th>
+                      <td mat-cell *matCellDef="let row">{{ row.username }}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="company">
+                      <th mat-header-cell *matHeaderCellDef>Compañia</th>
+                      <td mat-cell *matCellDef="let row">{{ row.company }}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="job">
+                      <th mat-header-cell *matHeaderCellDef>Puesto</th>
+                      <td mat-cell *matCellDef="let row">{{ row.job }}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="createdDate">
+                      <th mat-header-cell *matHeaderCellDef>Fecha de creación</th>
+                      <td mat-cell *matCellDef="let row">{{ getFormatDate(row.createdAt) }}</td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="actions">
+                      <th mat-header-cell *matHeaderCellDef>Acciones</th>
+                      <td mat-cell *matCellDef="let row" colspan="2" class="action-button">
+                        <button
+                        mat-icon-button
+                        color="primary"
+                        matTooltip="Editar usuario seleccionado"
+                        (click)="userEdition(row)"
+                      >
+                        <mat-icon>create</mat-icon>
+                      </button>
+                      <button
+                        mat-icon-button
+                        color="primary"
+                        matTooltip="Eliminar usuario seleccionado"
+                        (click)="userDelete(row)"
+                      >
+                        <mat-icon>delete_forever</mat-icon>
+                      </button>
+                      </td>
+                    </ng-container>
+    
+                    <tr
+                      mat-header-row
+                      *matHeaderRowDef="userColumns; sticky: true">
+                    </tr>
+                    <tr
+                      mat-row
+                      *matRowDef="let row; columns: userColumns"
+                      class="row-pointer"
+                    ></tr>
+                    <tr class="mat-row" *matNoDataRow>
+                      <td *ngIf="inputUser.value !== ''; else noData" class="mat-cell" colspan="8">No se encontraron usuarios con el filtro "{{ inputUser.value }}"</td>
+                      <ng-template #noData>
+                        <td class="mat-cell" colspan="8">
+                          No se han obtenido usuarios
+                        </td>
+                      </ng-template>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div *ngIf="view === 'user-new' || view === 'user-edition'">
+            <div *ngIf="view === 'user-new'" class="section-content">
+              <mat-icon>person_add</mat-icon>
+              <span class="flex-blank-filler">
+                Crear nuevo usuario
+              </span>
+              <button mat-icon-button (click)="saveUser()" title="Guardar nuevo usuario">
+                <mat-icon>save</mat-icon>
+              </button>
+              <button mat-icon-button (click)="changeView('user-list')" title="Lista de usuarios">
+                <mat-icon>person</mat-icon>
+              </button>
+            </div>
+
+            <div *ngIf="view === 'user-edition'" class="section-content">
+              <mat-icon>create</mat-icon>
+              <span class="flex-blank-filler">
+                Editar usuario
+              </span>
+              <button mat-icon-button (click)="saveUser()" title="Guardar cambios">
+                <mat-icon>save</mat-icon>
+              </button>
+              <button mat-icon-button (click)="changeView('user-list')" title="Lista de usuarios">
+                <mat-icon>person</mat-icon>
+              </button>
+            </div>
+
+            <div>
+              <div *ngIf="showResult" class="result-container" [ngClass]="{'correct': resultCorrect}">
+                {{ resultMessage }}
+              </div>
+
+              <mat-grid-list cols="6" rowHeight="60px">
+                <mat-grid-tile colspan="2">
+                  <mat-form-field>
+                    <mat-label>Apellido</mat-label>
+                    <input
+                      matInput
+                      [(ngModel)]="newEditionUser.surname"
+                      placeholder="Apellido"
+                    />
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile colspan="2">
+                  <mat-form-field>
+                    <mat-label>Nombre</mat-label>
+                    <input matInput [(ngModel)]="newEditionUser.givenname" placeholder="Nombre" />
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile colspan="2">
+                  <mat-form-field>
+                    <mat-label>Compañia</mat-label>
+                    <input
+                      matInput
+                      [(ngModel)]="newEditionUser.company"
+                      placeholder="Compañia"
+                    />
+                  </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile colspan="2">
+                  <mat-form-field>
+                    <mat-label>Puesto</mat-label>
+                    <input
+                      matInput
+                      [(ngModel)]="newEditionUser.job"
+                      placeholder="Puesto"
+                    />
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile colspan="2">
+                  <select
+                    [(ngModel)]="newEditionUser.idRol"
+                    name="selectRol"
+                  >
+                    <option selected disabled value="">Rol</option>
+                    <option
+                      *ngFor="let r of rol"
+                      [ngValue]="r.idRol"
+                    >
+                      {{ r.rolName }}
+                    </option>
+                  </select>
+                </mat-grid-tile>
+                <mat-grid-tile colspan="2">                  
+                  <mat-label>Administrador</mat-label>
+                  <mat-checkbox [checked]="newEditionUser.isAdmin" [(ngModel)]="newEditionUser.isAdmin" matTooltip="Es un usuario administrador"></mat-checkbox>
+                </mat-grid-tile>
+
+                <mat-grid-tile colspan="2">
+                  <mat-form-field>
+                    <mat-label>Nombre de usuario</mat-label>
+                    <input matInput [(ngModel)]="newEditionUser.username" placeholder="Nombre de usuario" />
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile colspan="2">
+                  <mat-form-field>
+                    <mat-label>Contraseña</mat-label>
+                    <input type="password" matInput [(ngModel)]="newEditionUser.password" placeholder="Contraseña" />
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile colspan="2">
+                  <mat-form-field>
+                    <mat-label>Confirme contraseña</mat-label>
+                    <input type="password" matInput [(ngModel)]="confirmPassword" placeholder="Contraseña" />
+                  </mat-form-field>
+                </mat-grid-tile>
+              </mat-grid-list>
+            </div>
+          </div>
+          
+        </mat-tab>
+        <mat-tab label="Roles">
+          <div *ngIf="view === 'rol-list'">
+            <div class="section-content">
+              <mat-icon>assignment_ind</mat-icon>
+              <span class="flex-blank-filler">
+                Lista de roles
+              </span>
+              <button mat-icon-button (click)="changeView('rol-new')" title="Crear nuevo rol">
+                <mat-icon>group</mat-icon>
+              </button>
+            </div>
+            <div>
+              <div *ngIf="showResult" class="result-container" [ngClass]="{'correct': resultCorrect}">
+                {{ resultMessage }}
+              </div>
+              <div class="filter-container">
+                <mat-form-field>
+                  <mat-label>Filtro</mat-label>
+                  <input matInput (keyup)="applyFilterRol($event)" placeholder="Filtro" #inputRol>
+                </mat-form-field>
+                <span class="total-info">
+                  Total de roles: {{ roles.data.length | number: "1.0-0" }}
+                </span>
+              </div>
+              <div class="mat-elevation-z8">
+                <div class="data-table">
+                  <table mat-table [dataSource]="roles">
+                    <ng-container matColumnDef="rol">
+                      <th mat-header-cell *matHeaderCellDef>Nombre rol</th>
+                      <td mat-cell *matCellDef="let row">{{ row.rolName }}</td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="actions">
+                      <th mat-header-cell *matHeaderCellDef>Acciones</th>
+                      <td mat-cell *matCellDef="let row" colspan="4" class="action-button">
+                        <button
+                          mat-icon-button
+                          color="primary"
+                          matTooltip="Permisos capas"
+                          (click)="watchPermissionLayer(row)"
+                        >
+                          <mat-icon>layers</mat-icon>
+                        </button>
+                        <button
+                          mat-icon-button
+                          color="primary"
+                          matTooltip="Permisos herramientas"
+                          (click)="watchPermissionTool(row)"
+                        >
+                          <mat-icon>settings</mat-icon>
+                        </button>
+                        <button
+                          mat-icon-button
+                          color="primary"
+                          matTooltip="Editar rol seleccionado"
+                          (click)="rolEdition(row)"
+                        >
+                          <mat-icon>create</mat-icon>
+                        </button>
+                        <button
+                          mat-icon-button
+                          color="primary"
+                          matTooltip="Eliminar rol seleccionado"
+                          (click)="rolDelete(row)"
+                        >
+                          <mat-icon>delete_forever</mat-icon>
+                        </button>
+                      </td>
+                    </ng-container>
+    
+                    <tr
+                      mat-header-row
+                      *matHeaderRowDef="rolColumns; sticky: true">
+                    </tr>
+                    <tr
+                      mat-row
+                      *matRowDef="let row; columns: rolColumns"
+                      class="row-pointer"
+                    ></tr>
+                    <tr class="mat-row" *matNoDataRow>
+                      <td *ngIf="inputRol.value !== ''; else noData" class="mat-cell" colspan="2">No se encontraron roles con el filtro "{{ inputRol.value }}"</td>
+                      <ng-template #noData>
+                        <td class="mat-cell" colspan="2">
+                          No se han obtenido roles
+                        </td>
+                      </ng-template>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div *ngIf="view === 'rol-new' || view === 'rol-edition'">
+            <div *ngIf="view === 'rol-new'" class="section-content">
+              <mat-icon>assignment_ind</mat-icon>
+              <span class="flex-blank-filler">
+                Crear nuevo rol
+              </span>
+              <button mat-icon-button (click)="saveRol()" title="Guardar nuevo rol">
+                <mat-icon>save</mat-icon>
+              </button>
+              <button mat-icon-button (click)="changeView('rol-list')" title="Lista de roles">
+                <mat-icon>assignment_ind</mat-icon>
+              </button>
+            </div>
+
+            <div *ngIf="view === 'rol-edition'" class="section-content">
+              <mat-icon>create</mat-icon>
+              <span  class="flex-blank-filler">
+                Editar rol
+              </span>
+              <button mat-icon-button (click)="saveRol()" title="Guardar cambios">
+                <mat-icon>save</mat-icon>
+              </button>
+              <button mat-icon-button (click)="changeView('rol-list')" title="Lista de roles">
+                <mat-icon>assignment_ind</mat-icon>
+              </button>
+            </div>
+
+            <div>
+              <div *ngIf="showResult" class="result-container" [ngClass]="{'correct': resultCorrect}">
+                {{ resultMessage }}
+              </div>
+
+              <mat-grid-list cols="4" rowHeight="60px">
+                <mat-grid-tile colspan="2">
+                  <mat-form-field>
+                    <mat-label>Nombre del rol</mat-label>
+                    <input
+                      matInput
+                      [(ngModel)]="newEditionCurrentRol.rolName"
+                      placeholder="Nombre del rol"
+                    />
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile colspan="2">
+                </mat-grid-tile>
+              </mat-grid-list>
+            </div>
+          </div>
+
+          <div *ngIf="view === 'permission-layer'">
+            <div class="section-content">
+              <mat-icon>layers</mat-icon>
+              <span class="flex-blank-filler">
+                Permisos a capas rol: {{ newEditionCurrentRol.rolName }}
+              </span>
+              <button mat-icon-button (click)="saveLayersPermission()" title="Guardar cambios de permisos de capas">
+                <mat-icon>save</mat-icon>
+              </button>
+              <button mat-icon-button (click)="changeView('rol-list')" title="Lista de roles">
+                <mat-icon>assignment_ind</mat-icon>
+              </button>
+            </div>
+            <div>
+              <div *ngIf="showResult" class="result-container" [ngClass]="{'correct': resultCorrect}">
+                {{ resultMessage }}
+              </div>
+              <div *ngFor="let group of tocGroup">
+                <mat-card class="clickable">
+                  <mat-card-header class="item-card" (click)="group.status = !group.status">
+                    <mat-card-title class="title">{{ group.group }} ({{group.tocLayers.length}})</mat-card-title>
+                  </mat-card-header>
+                  <mat-card-content>
+                    <div *ngIf="group.status">
+                      <div *ngFor="let layer of group.tocLayers" class="item">
+                        <span class="layer-label">
+                          {{ layer.capa }}
+                        </span>
+                        <span class="layer-label">
+                          {{ layer.service }}
+                        </span>
+                        <mat-slide-toggle
+                          (change)="layer.hasPermission = !layer.hasPermission"
+                          [checked]="layer.hasPermission"
+                        ></mat-slide-toggle>
+                      </div>
+                    </div>
+                  </mat-card-content>
+                </mat-card>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="view === 'permission-tool'">
+            <div class="section-content">
+              <mat-icon>settings</mat-icon>
+              <span  class="flex-blank-filler">
+                Permisos a herramientas rol: {{ newEditionCurrentRol.rolName }}
+              </span>
+              <button mat-icon-button (click)="saveToolsPermission()" title="Guardar cambios de permisos de herramientas">
+                <mat-icon>save</mat-icon>
+              </button>
+              <button mat-icon-button (click)="changeView('rol-list')" title="Lista de roles">
+                <mat-icon>assignment_ind</mat-icon>
+              </button>
+            </div>
+            <div>
+              <div *ngIf="showResult" class="result-container" [ngClass]="{'correct': resultCorrect}">
+                {{ resultMessage }}
+              </div>
+              <div *ngFor="let group of toolGroup">
+                <mat-card class="clickable">
+                  <mat-card-header class="item-card" (click)="group.status = !group.status">
+                    <mat-card-title class="title">{{ group.group }} ({{ group.tools.length }})</mat-card-title>
+                  </mat-card-header>
+                  <mat-card-content>
+                    <div *ngIf="group.status">
+                      <div *ngFor="let tool of group.tools" class="item">
+                        <span class="tool-label">
+                          {{ tool.name }}
+                        </span>
+                        <span class="layer-label">
+                          {{ tool.description }}
+                        </span>
+                        <mat-slide-toggle
+                          (change)="tool.hasPermission = !tool.hasPermission"
+                          [checked]="tool.hasPermission"
+                        ></mat-slide-toggle>
+                      </div>
+                    </div>
+                  </mat-card-content>
+                </mat-card>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="Parámetros">
+          <div *ngIf="view === 'param-list'">
+            <div class="section-content">
+              <mat-icon>speaker_notes</mat-icon>
+              <span class="flex-blank-filler">
+                Lista de parámetros
+              </span>
+              <button mat-icon-button disabled="true">
+              </button>
+            </div>
+            <div>
+              <div *ngIf="showResult" class="result-container" [ngClass]="{'correct': resultCorrect}">
+                {{ resultMessage }}
+              </div>
+              <br>
+              <div class="mat-elevation-z8">
+                <div class="data-table">
+                  <table mat-table [dataSource]="params">
+                    <ng-container matColumnDef="nombre">
+                      <th mat-header-cell *matHeaderCellDef>Nombre</th>
+                      <td mat-cell *matCellDef="let row">{{ row.parameterName }}</td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="descripcion">
+                      <th mat-header-cell *matHeaderCellDef>Descripción</th>
+                      <td mat-cell *matCellDef="let row">{{ row.description }}</td>
+                    </ng-container>
+    
+                    <ng-container matColumnDef="valor">
+                      <th mat-header-cell *matHeaderCellDef>Valor</th>
+                      <td mat-cell *matCellDef="let row">
+                        <input type="number" [(ngModel)]="row.value">
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="actions">
+                      <th mat-header-cell *matHeaderCellDef>Acciones</th>
+                      <td mat-cell *matCellDef="let row" class="action-button">
+                        <button mat-icon-button color="primary" (click)="saveParam(row)" matTooltip="Guardar cambios">
+                          <mat-icon>save</mat-icon>
+                        </button>
+                      </td>
+                    </ng-container>
+    
+                    <tr
+                      mat-header-row
+                      *matHeaderRowDef="paramColumns; sticky: true">
+                    </tr>
+                    <tr
+                      mat-row
+                      *matRowDef="let row; columns: paramColumns"
+                      class="row-pointer"
+                    ></tr>
+                    <tr class="mat-row" *matNoDataRow>
+                      <td class="mat-cell" colspan="3">
+                        No se han obtenido parámetros de configuración
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>
+
+<sic-backdrop [backdropMessage]="backdropMessage" [showingLoading]="showLoading"></sic-backdrop>
